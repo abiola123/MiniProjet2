@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry excluding="java/|resources/" kind="src" path="src/main"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="lib" path="C:/Users/DVS-KINSHASA/Desktop/MiniProjet2/jbox2d-library-2.2.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
