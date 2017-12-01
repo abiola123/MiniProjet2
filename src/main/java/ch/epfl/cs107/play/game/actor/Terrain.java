@@ -55,4 +55,9 @@ private ImageGraphics terrainGraphics;
 		// TODO Auto-generated method stub
 		
 	}
+	
+//	public Vector getVelocity() {
+//		
+//		return null;
+		
 }

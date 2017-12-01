@@ -66,7 +66,7 @@ public abstract class GameEntity {
 		return body;
 	}
 	
-	
+	//protected ou public ?
 	public Vector getVelocity() {
 		Vector velocity = body.getVelocity();
 		return velocity;
