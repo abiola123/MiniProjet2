@@ -21,7 +21,7 @@ private Crate thirdCrate;
 		super.begin(window, fileSystem);
 		this.window = window;
 		this.fileSystem = fileSystem;
-		hell world
+
 	
 		
 		firstCrate = new Crate(this,false,v1,1.0f,1.0f);

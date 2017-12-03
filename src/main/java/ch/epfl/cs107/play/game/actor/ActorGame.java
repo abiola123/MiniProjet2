@@ -4,10 +4,13 @@ package ch.epfl.cs107.play.game.actor;
 
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.io.FileSystem;
+import ch.epfl.cs107.play.math.Entity;
 import ch.epfl.cs107.play.math.EntityBuilder;
 import ch.epfl.cs107.play.math.Positionable;
 import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
+import ch.epfl.cs107.play.math.WheelConstraint;
+import ch.epfl.cs107.play.math.WheelConstraintBuilder;
 import ch.epfl.cs107.play.math.World;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
@@ -29,6 +32,10 @@ public abstract class ActorGame implements Game {
 	private static final float VIEW_INTERPOLATION_RATIO_PER_SECOND = 0.1f ;
 	private static final float VIEW_SCALE = 10.0f ;
 	private ArrayList<Actor> operatingActor = new ArrayList<Actor>();
+	private Entity vehicle;
+	private Entity body;
+	private Vector anchor; 
+	private Vector axis;
 	
 	
 	public Keyboard getKeyboard(){
@@ -121,8 +128,34 @@ public abstract class ActorGame implements Game {
 	public EntityBuilder CreateEntityBuilder() {
 		return world.createEntityBuilder();
 	}
+
+
+
+	public WheelConstraint CreateWheelConstraintBuilder(Entity vehicle,Entity body, Vector anchor, Vector axis ) {
+		this.vehicle = vehicle;
+		this.body = body;
+		this.anchor = anchor;
+		
+		WheelConstraintBuilder constraintBuilder = world.createWheelConstraintBuilder() ;
+		constraintBuilder.setFirstEntity(vehicle) ;
+		// point d'ancrage du véhicule :
+		constraintBuilder.setFirstAnchor(anchor) ;
+		// Entity associée à la roue :
+		constraintBuilder.setSecondEntity(body) ;
+		// point d'ancrage de la roue (son centre) :
+		constraintBuilder.setSecondAnchor(Vector.ZERO) ;
+		// axe le long duquel la roue peut se déplacer :
+		constraintBuilder.setAxis(axis) ;
+		// fréquence du ressort associé
+		constraintBuilder.setFrequency (3.0f) ;
+		constraintBuilder.setDamping (0.5f) ;
+		// force angulaire maximale pouvant être appliquée
+		//à la roue pour la faire tourner :
+		constraintBuilder.setMotorMaxTorque (10.0f) ;
+		return constraintBuilder.build () ;
+	}
 	
-	
+}
 	
 	/**
 	* Simulates a single time step.
@@ -130,4 +163,3 @@ public abstract class ActorGame implements Game {
 	seconds , non -negative
 	*/
 	
-}
