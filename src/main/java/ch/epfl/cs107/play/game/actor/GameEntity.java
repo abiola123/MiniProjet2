@@ -37,12 +37,7 @@ public abstract class GameEntity {
 //		PartBuilder partBuilder = body.createPartBuilder();
 //		partBuilder.setShape(shape);
 //		body.setParent()
-//		
-		
-		
-		
-		 
-	
+//	
 
 }
 	 

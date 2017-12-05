@@ -22,47 +22,20 @@ public class Wheel extends GameEntity implements Actor {
 	private Wheel wheel;
 	private ShapeGraphics wheelGraphics;
 	private PartBuilder partBuilder;
-	private boolean attached;
-	private Constraint constraint;
-	//is this world empty ?
-	private World world;
-	private float diameter;
-	public Wheel(ActorGame game, boolean fixed, Vector position, float diameter) {
+	
+	public Wheel(ActorGame game, boolean fixed, Vector position, float radius) {
 		super(game, fixed, position);
-		this.diameter = diameter;
+		
 		partBuilder = body.createPartBuilder();
-		Circle circle = new Circle (diameter);
+		Circle circle = new Circle (radius);
 		partBuilder.setShape(circle);
 		partBuilder.build();
 		
 		wheelGraphics = new ShapeGraphics(circle,Color.WHITE,Color.WHITE,.1f,1.f,0);
+		wheelGraphics.setParent(body);
 		
 		}
 		
-		
-		public void attach(Entity vehicle,Vector anchor,Vector axis) {
-	
-			
-			
-			
-			WheelConstraintBuilder constraintBuilder = world.createWheelConstraintBuilder() ;
-			constraintBuilder.setFirstEntity(vehicle) ;
-			// point d'ancrage du véhicule :
-			constraintBuilder.setFirstAnchor(anchor) ;
-			// Entity associée à la roue :
-			constraintBuilder.setSecondEntity(body) ;
-			// point d'ancrage de la roue (son centre) :
-			constraintBuilder.setSecondAnchor(Vector.ZERO) ;
-			// axe le long duquel la roue peut se déplacer :
-			constraintBuilder.setAxis(axis) ;
-			// fréquence du ressort associé
-			constraintBuilder.setFrequency (3.0f) ;
-			constraintBuilder.setDamping (0.5f) ;
-			// force angulaire maximale pouvant être appliquée
-			//à la roue pour la faire tourner :
-			constraintBuilder.setMotorMaxTorque (10.0f) ;
-			constraint = constraintBuilder.build () ;
-		}
 	//????????????
 		public void power(float speed) {
 		
@@ -71,11 +44,11 @@ public class Wheel extends GameEntity implements Actor {
 		}
 	//??????????????????	
 		public void relax() {
-			wheel.relax();;
+	
 		}
 	//???????????????????
 		public void detach() {
-			wheel.detach();
+			constraint.destroy();
 		}
 		
 	

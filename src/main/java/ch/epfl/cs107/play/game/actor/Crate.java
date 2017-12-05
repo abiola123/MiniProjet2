@@ -19,7 +19,7 @@ private ImageGraphics blockGraphics;
 
 
 
-	public Crate(ActorGame game, boolean fixed , Vector position , float blockWidth, float blockHeight) {
+	public Crate(ActorGame game, boolean fixed ,String graphics, Vector position , float blockWidth, float blockHeight) {
 		
 		super(game, fixed,position);
 //		this.fixed = fixed;
@@ -38,7 +38,8 @@ private ImageGraphics blockGraphics;
 	partBuilder.setShape(polygon);
 	partBuilder.build();
 	
-	blockGraphics = new ImageGraphics("box.4.png",1,1);
+	//mettte methode pour les dimensions ?
+	blockGraphics = new ImageGraphics(graphics,1,1);
 	blockGraphics.setParent(body);
 	
 	}
