@@ -16,10 +16,10 @@ private ImageGraphics blockGraphics;
 //private Vector position;
 //private float blockWidth;
 //private float blockHeight;
+private String graphics;
 
 
-
-	public Crate(ActorGame game, boolean fixed ,String graphics, Vector position , float blockWidth, float blockHeight) {
+	public Crate(ActorGame game, boolean fixed, Vector position , float blockWidth, float blockHeight, String graphics) {
 		
 		super(game, fixed,position);
 //		this.fixed = fixed;
@@ -27,6 +27,8 @@ private ImageGraphics blockGraphics;
 //		this.position = position;
 //		this.blockHeight = blockHeight;
 //		this.blockWidth = blockWidth;
+		this.graphics = graphics;
+		
 	PartBuilder partBuilder = body.createPartBuilder();
 	Polygon polygon = new Polygon (
 			new Vector (0.0f, 0.0f),
@@ -39,7 +41,7 @@ private ImageGraphics blockGraphics;
 	partBuilder.build();
 	
 	//mettte methode pour les dimensions ?
-	blockGraphics = new ImageGraphics(graphics,1,1);
+	blockGraphics = new ImageGraphics(graphics,blockWidth,blockHeight);
 	blockGraphics.setParent(body);
 	
 	}
@@ -60,5 +62,11 @@ public Vector getVelocity() {
 	// TODO Auto-generated method stub
 	return getVelocity();
 }
+
+////allowed to do this ??
+//public Entity getBody() {
+//	// TODO Auto-generated method stub
+//	return body;
+//}
 
 }

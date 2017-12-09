@@ -25,7 +25,7 @@ public class Crate extends GameEntity implements Actor {
 	//----------------------------------------------------------------
 	
 	
-		public Crate(ActorGame game, boolean fixed , Vector position , float blockWidth, float blockHeight) {
+		public Crate(ActorGame game, boolean fixed , Vector position , float blockWidth, float blockHeight, String graphics) {
 			
 			super(game, fixed,position);
 //			this.fixed = fixed;
@@ -43,7 +43,7 @@ public class Crate extends GameEntity implements Actor {
 		
 		partBuilder.setShape(polygon);
 		partBuilder.build();
-		blockGraphics = new ImageGraphics("stone.broken.4.png",1,1);
+		blockGraphics = new ImageGraphics(graphics,1,1);
 		blockGraphics.setParent(body);
 	//--------------------------------------------------------------
 		
@@ -73,7 +73,9 @@ public class Crate extends GameEntity implements Actor {
 	
 	//---------------------------------------------------------------
 		
-		
+		public Entity getBody() {
+			return body;
+		}
 		
 		// les returns sont correctes ???
 		@Override

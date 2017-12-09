@@ -24,9 +24,9 @@ private Crate thirdCrate;
 
 	
 		
-		firstCrate = new Crate(this,false,v1,1.0f,1.0f);
-	    secondCrate = new Crate(this,false,v2,1.0f,1.0f);
-		thirdCrate = new Crate(this,false,v3,1.0f,1.0f);
+		firstCrate = new Crate(this,false,v1,1.0f,1.0f, "wood.4.png");
+	    secondCrate = new Crate(this,false,v2,1.0f,1.0f, "wood.4.png");
+		thirdCrate = new Crate(this,false,v3,1.0f,1.0f, "wood.4.png");
 		
 		actorListAddActor((Actor)firstCrate);
 		actorListAddActor((Actor)secondCrate);

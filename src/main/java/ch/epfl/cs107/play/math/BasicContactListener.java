@@ -1,3 +1,4 @@
+
 package ch.epfl.cs107.play.math;
 
 import java.util.Collections;
