@@ -38,7 +38,7 @@ public class Wheel extends GameEntity implements Actor {
 		partBuilder.setShape(circle);
 		partBuilder.setFriction(1);
 		partBuilder.build();
-		wheelGraphics = new ShapeGraphics(circle,Color.BLACK,Color.WHITE,.1f,1.f,0);
+		wheelGraphics = new ShapeGraphics(circle,Color.GRAY,Color.WHITE,.1f,1.f,0);
 		wheelGraphics.setParent(body);
 		Polyline rad = new Polyline(new Vector(0.0f,0.0f), new Vector(0.0f,0.5f));
 		wheelGraphicsRad = new ShapeGraphics(rad,Color.WHITE,Color.WHITE,.1f,1.f,0);

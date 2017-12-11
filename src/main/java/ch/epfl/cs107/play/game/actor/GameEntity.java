@@ -30,18 +30,10 @@ public abstract class GameEntity {
 	 public GameEntity(ActorGame game, boolean fixed , Vector position) {
 		this.game = game;
 	
-		
-		//we chose a boolean to let the user choose between a ShapeBuilder and a EntityBuilder , if the boolean is true the game chooses a EntityBuilder, if it is false we get a ShapeBuilder
-		
 		EntityBuilder entityBuilder = game.CreateEntityBuilder();
 		entityBuilder.setFixed(fixed);
 		entityBuilder.setPosition(position);
 		body = entityBuilder.build();
-		
-//		PartBuilder partBuilder = body.createPartBuilder();
-//		partBuilder.setShape(shape);
-//		body.setParent()
-//	
 
 }
 	 
@@ -51,11 +43,9 @@ public abstract class GameEntity {
 		
 		EntityBuilder entityBuilder = game.CreateEntityBuilder();
 		entityBuilder.setFixed(fixed);
-		body = entityBuilder.build();
-		
-		
-	
+		body = entityBuilder.build();	
 	}
+	
 	
 	public void destroy() {
 		body.destroy();
@@ -63,6 +53,11 @@ public abstract class GameEntity {
 	
 	protected Entity getEntity() {
 		return body;
+	}
+	
+	
+	public float getWheelSpeed(Wheel wheel) {
+		return wheel.getEntity().getAngularPosition();
 	}
 	
 	

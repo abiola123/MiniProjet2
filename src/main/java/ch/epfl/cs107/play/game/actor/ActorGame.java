@@ -24,54 +24,54 @@ import com.sun.glass.events.KeyEvent;
 
 public abstract class ActorGame implements Game {
 	private Window window;
-	//should this really be a static ? how can we improve this ?
 	private World world;
 	private Actor actor;
 	private FileSystem fileSystem;
 	private Vector viewCenter ;
 	private Vector viewTarget ;
-	private Positionable viewCandidate ; //l’on re-centre la caméra directement sur 
-										 //viewCandidate à chaque update
+	private Positionable viewCandidate ;
+	//l’on re-centre la caméra directement sur 
+	//viewCandidate à chaque update
 	private static final float VIEW_TARGET_VELOCITY_COMPENSATION = 0.2f ;
 	private static final float VIEW_INTERPOLATION_RATIO_PER_SECOND = 0.1f ;
-	private static final float VIEW_SCALE = 10.0f ;
+	private static final float VIEW_SCALE = 14.0f ;
 	private ArrayList<Actor> operatingActor = new ArrayList<Actor>();
 	private Entity vehicle;
 	private Entity body;
 	private Vector anchor; 
 	private Vector axis;
-	
+
 	public boolean direction = true;
 	public boolean blockWheels;
 	public boolean move;
 	public boolean rightShift;
 	public boolean leftShift;
-	
+
 	public Keyboard getKeyboard(){
 		return window.getKeyboard();
-		
+
 	}
-	
+
 	public Canvas getCanvas() {
 		return window;
-		
+
 	}
-	
+
 	//--------------------------------------------
-	
+
 	public void actorListAddActor(Actor actor) {
-		operatingActor.add(actor);
-		
+		getOperatingActor().add(actor);
+
 	}
-	
-	
+
+
 	//select the the line that you want to remove from your actorArray
 	public void actorListRemoveActor(int indexOfLine) {
-		operatingActor.remove(indexOfLine);
+		getOperatingActor().remove(indexOfLine);
 	}
-	
+
 	//-----------------------------------------------
-	
+
 	public boolean begin(Window window,FileSystem fileSystem) {
 		this.window = window;
 		this.fileSystem = fileSystem;
@@ -79,61 +79,80 @@ public abstract class ActorGame implements Game {
 		viewCenter = Vector.ZERO;
 		viewTarget = Vector.ZERO;
 		world.setGravity(new Vector(0.0f, -9.81f));
-		
-		
+
+
 		return true;
-		
-	}
-	
-	//----------------------------------------------
-	
-	
-	
-	
-	public void end() {
+
 	}
 
-	
+	//----------------------------------------------
+
+
+
+// we have to Remove multiple times because otherwise it won´t delete all Actors.
+	public void end() {
+		for(int n = 0; n < 5; n++) {
+			for(int i = 0; i < operatingActor.size(); i++) {
+				actorListRemoveActor(i);
+			}
+		}
+	}
+
+
+	/**
+	 * Simulates a single time step.
+	 * @param deltaTime elapsed time since last update , in
+	seconds , non -negative
+	 */
 	public void update(float deltaTime) {
 		world.update(deltaTime);
-		
+
+		if (window.getKeyboard().get(KeyEvent.VK_R).isPressed()) {
+			end();
+			begin(window, fileSystem);
+		}
+
 		// Update expected viewport center
 		if (viewCandidate != null) {
-		viewTarget =
-		viewCandidate.getPosition ().add(viewCandidate.getVelocity ()
-		.mul(VIEW_TARGET_VELOCITY_COMPENSATION)) ;
+			viewTarget =
+					viewCandidate.getPosition ().add(viewCandidate.getVelocity ()
+							.mul(VIEW_TARGET_VELOCITY_COMPENSATION)) ;
 		}
 		// Interpolate with previous location
 		float ratio = (float)Math.pow(VIEW_INTERPOLATION_RATIO_PER_SECOND ,
-		deltaTime) ;
+				deltaTime) ;
 		viewCenter = viewCenter.mixed(viewTarget , ratio) ;
 		// Compute new viewport
 		Transform viewTransform =
-		Transform.I.scaled(VIEW_SCALE).translated(viewCenter) ;
+				Transform.I.scaled(VIEW_SCALE).translated(viewCenter) ;
 		window.setRelativeTransform(viewTransform) ;
-		
-		for (Actor actor : this.operatingActor) {
+
+		for (Actor actor : this.getOperatingActor()) {
 			actor.update(deltaTime);
-			
+
 		}
-		
-		for (Actor actor : this.operatingActor) {
+
+		for (Actor actor : this.getOperatingActor()) {
 			actor.draw(window);
 		}
 	}
-		
-		
+
+
+	public ArrayList<Actor> getOperatingActor() {
+		return operatingActor;
+	}
+
 	//------------------------------------------------------------
-	
+
 	public void setViewCandidate(Positionable viewCandidate) {
-			this.viewCandidate = viewCandidate;
-			
-		}
-		
+		this.viewCandidate = viewCandidate;
+
+	}
+
 	//------------------------------------------------------------
-	
-	//----------------------CONSTRAINTS-----------------------------	
-	
+
+	//----------------------CONSTRAINTS----------------------------	
+
 	//To answer Q2 creates entity builder without access to world
 	public EntityBuilder CreateEntityBuilder() {
 		return world.createEntityBuilder();
@@ -143,25 +162,24 @@ public abstract class ActorGame implements Game {
 	//wheels for the bike
 	public WheelConstraintBuilder CreateWheelConstraintBuilder() {
 		return world.createWheelConstraintBuilder(); }
-	
-	
+
+
 	//plank and circle of the seasaw
 	public RevoluteConstraintBuilder CreateRevoluteConstraintBuilder() {
 		return world.createRevoluteConstraintBuilder();
 	}
-	
+
 
 	public RopeConstraintBuilder CreateRopeConstraintBuilder() {
 		return world.createRopeConstraintBuilder();
 	}
-	
+
+
+
+
+
 	//--------------------------------------------------------------
-		
+
 }
-	
-	/**
-	* Simulates a single time step.
-	* @param deltaTime elapsed time since last update , in
-	seconds , non -negative
-	*/
-	
+
+
