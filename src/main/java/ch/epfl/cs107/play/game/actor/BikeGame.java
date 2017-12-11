@@ -9,6 +9,7 @@ import ch.epfl.cs107.play.game.actor.general.Plank;
 import ch.epfl.cs107.play.game.actor.general.Seasaw;
 import ch.epfl.cs107.play.game.actor.general.Terrain;
 import ch.epfl.cs107.play.io.FileSystem;
+import ch.epfl.cs107.play.math.BasicContactListener;
 import ch.epfl.cs107.play.math.Contact;
 import ch.epfl.cs107.play.math.ContactListener;
 import ch.epfl.cs107.play.math.Transform;
@@ -32,9 +33,10 @@ private Pendule pendule;
 private boolean contactBikeFinish;
 private CrateField crateField;
 private TextGraphics message;
+private BasicContactListener contactListener;
 
 //vecteur finish line a changer 
-private Vector finishLinePosition = new Vector(270.0f, -6.0f);
+private Vector finishLinePosition = new Vector(10.0f, 0f);
 private Vector terrainPosition = new Vector(0.0f,0.0f);
 private Vector v1 = (new Vector(0.0f, 5.0f));
 private Vector v2 = (new Vector(0.2f, 7.0f));
@@ -48,6 +50,11 @@ private Vector crateFieldPosition = (new Vector(220f,-5f));
 		super.begin(window, fileSystem);
 		this.window = window;
 		this.fileSystem = fileSystem;
+		
+		
+		
+		
+		
 		
 		setPosition(new Vector(4.0f,6.0f));
 		terrain = new Terrain(this,true,terrainPosition);
@@ -65,6 +72,11 @@ private Vector crateFieldPosition = (new Vector(220f,-5f));
 //									false, new Vector(0.5f,0.5f),1.0f, 100.0f);
 //		message.setParent(getCanvas());
 		
+		
+		contactListener = new BasicContactListener();
+		finishLine.addContactListener(contactListener);
+		
+		
 		actorListAddActor((Actor)terrain);
 		actorListAddActor((Actor)firstCrate);
 		actorListAddActor((Actor)secondCrate);
@@ -76,15 +88,26 @@ private Vector crateFieldPosition = (new Vector(220f,-5f));
 		actorListAddActor((Actor)pendule);
 		actorListAddActor((Actor)crateField);
 		
+		
+		
 		this.setViewCandidate(bike);
 		
 		return true;
 		
 	}
 	
+	public boolean contactBikeFinish() {
+		return contactListener.hasContactWith(bike.getEntity());
+	}
+	
 	public void update(Float deltaTime ) {
 		setViewCandidate(bike);
 		super.update(deltaTime);
+		
+		
+		if(contactBikeFinish()) {
+			finishLine.setFinishGraphics("flag.green.png");
+		}
 
 	}
 		

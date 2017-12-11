@@ -10,8 +10,10 @@ import org.jbox2d.dynamics.contacts.Velocity;
 
 import ch.epfl.cs107.play.game.actor.bike.Bike;
 import ch.epfl.cs107.play.game.actor.general.Wheel;
+import ch.epfl.cs107.play.math.BasicContactListener;
 import ch.epfl.cs107.play.math.Circle;
 import ch.epfl.cs107.play.math.Contact;
+import ch.epfl.cs107.play.math.ContactListener;
 import ch.epfl.cs107.play.math.Polygon;
 import ch.epfl.cs107.play.math.Shape;
 
@@ -21,6 +23,7 @@ public abstract class GameEntity {
 	private ActorGame game;
 	private Entity body;
 	private Contact contact;
+	private ContactListener contactListener;
 	
 	// protected allow a better protection and prevent the modification outside of the package
 	// protected still allows whole access in the same package, just like "public" would do normally and this is not always wanted
@@ -74,7 +77,11 @@ public abstract class GameEntity {
 
 		
 	
-
+public void addContactListener(ContactListener listener) {
+	body.addContactListener(listener);
+	contactListener = listener;
+	
+}
 
 	
 	
