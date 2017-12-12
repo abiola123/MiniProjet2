@@ -27,6 +27,15 @@ public class Terrain extends GameEntity implements Actor {
 	private Entity line5 = getEntity();
 	private Entity line6 = getEntity();
 	private Entity line7 = getEntity();
+	private Entity line8 = getEntity();
+	private Entity line9 = getEntity();
+	private Entity line10 = getEntity();
+	private Entity line11 = getEntity();
+	private Entity line12 = getEntity();
+	private Entity line13 = getEntity();
+	private Entity line14 = getEntity();
+
+	
 	private Entity poly2 = getEntity();
 	private Entity poly3 = getEntity();
 	private Entity poly4 = getEntity();
@@ -44,6 +53,13 @@ public class Terrain extends GameEntity implements Actor {
 	private ShapeGraphics line4Graphics;
 	private ShapeGraphics line5Graphics;
 	private ShapeGraphics line6Graphics;
+	private ShapeGraphics line7Graphics;
+	private ShapeGraphics line8Graphics;
+	private ShapeGraphics line9Graphics;
+	private ShapeGraphics line10Graphics;
+	private ShapeGraphics line11Graphics;
+	private ShapeGraphics line12Graphics;
+	
 	private ShapeGraphics polygon1Graphics;
 	private ShapeGraphics polygon2Graphics;
 	private ShapeGraphics polygon3Graphics;
@@ -149,17 +165,17 @@ public class Terrain extends GameEntity implements Actor {
 					);
 			
 			createPolyline(polyline3,line3,0.7f,partBuilder6 );
-			line3Graphics = new ShapeGraphics(polyline3,null,Color.BLUE,.1f,1.f,0);
+			line3Graphics = new ShapeGraphics(polyline3,null,Color.CYAN,.1f,1.f,0);
 			line3Graphics.setParent(line3);
 			
 			
 			PartBuilder partBuilder7 = poly4.createPartBuilder();
 			Polyline polyline4 = new Polyline (
 					200f , 0f,	
-					210f, 0f,
-					210f, -7f,
+					230f, 0f,
 					230f, -7f,
-					230f, 0f
+					250f, -7f,
+					250f, 0f
 					
 
 					);
@@ -172,10 +188,10 @@ public class Terrain extends GameEntity implements Actor {
 
 			PartBuilder partBuilder8 = poly5.createPartBuilder();
 			Polyline polyline5 = new Polyline (
-					210f , 0f,	
-					211f, 1f,
-					212f, 2f,
-					212.5f, 2.5f
+					230f , 0f,	
+					231f, 1f,
+					232f, 2f,
+					232.5f, 2.5f
 					
 
 					);
@@ -187,18 +203,81 @@ public class Terrain extends GameEntity implements Actor {
 			
 			PartBuilder partBuilder9 = poly6.createPartBuilder();
 			Polyline polyline6 = new Polyline (
-					227f , 0f,	
-					230f, 0f,
-					250f, -5f,
-					26000f,-50f
+					247f , 0f,	
+					250f, 0f,
+					270f, -5f,
+					280f, -5f
 
 					);
 			
 			
 			createPolyline(polyline6,line6,1.0f,partBuilder9 );
 			line6Graphics = new ShapeGraphics(polyline6,null,Color.WHITE,.1f,1.f,0);
-			line6Graphics.setParent(line6);
+
+
+			PartBuilder partBuilder10 = poly7.createPartBuilder();
+			Polyline polyline7 = new Polyline (
+					290f, -7f,
+					295f,  -8f,
+					296f,  -9f,
+					297f,  -10f,
+					298f,  -11f,
+					299f,  -12f, 
+					300f,   -13f,
+					301f,   -14f,
+					302f,   -15f,
+					303f,   -16f,
+					304f,   -17f,
+					305f,   -18f,
+					306f,   -19f,
+					307f,   -19.5f,
+					308f,    -19.6f,
+					309f,    -19.8f,
+					310f,    -19.7f,
+					311f,     -19.6f,
+					312f,     -19.5f,
+					313f,     -19f,
+					345f,      -11f
+					
+					);
 			
+			
+			createPolyline(polyline7,line7,1.0f,partBuilder9 );
+			line7Graphics = new ShapeGraphics(polyline7,null,Color.WHITE,.1f,1.f,0);
+			line7Graphics.setParent(line7);
+			
+			
+			
+			PartBuilder partBuilder11 = poly8.createPartBuilder();
+			Polyline polyline8 = new Polyline (
+//					290f, -7f+4f,
+					297f,  -8f+8f,
+					297f,  -9f+5f,
+					297f,  -10f+5f,
+					298f,  -11f+5f,
+					299f,  -12f+5f,
+					300f,   -13f +5f,
+					301f,   -14f  +5f,
+					302f,   -15f  +5f,
+					303f,   -16f  +5f,
+					304f,   -17f  +5f,
+					305f,   -18f   +5f,
+					306f,   -19f   +5f,
+					307f,   -19.5f  +5f,
+					308f,    -19.6f  +5f,
+					309f,    -19.8f +5f,
+					310f,    -19.7f +5f,
+					311f,     -19.6f +5f,
+					312f,     -19.5f +5f,
+					313f,     -19f +5f,
+					345f,      -11f +5f
+//					
+					);
+			
+			
+			createPolyline(polyline8,line8,1.0f,partBuilder11 );
+			line8Graphics = new ShapeGraphics(polyline8,null,Color.WHITE,.1f,1.f,0);
+			line8Graphics.setParent(line8);
 			
 //			partBuilder.setShape(polyline1);
 //			partBuilder.setFriction(1);
@@ -268,6 +347,8 @@ public class Terrain extends GameEntity implements Actor {
 		line4Graphics.draw(canvas);
 		line5Graphics.draw(canvas);
 		line6Graphics.draw(canvas);
+		line7Graphics.draw(canvas);
+		line8Graphics.draw(canvas);
 	    polygon1Graphics.draw(canvas);
 	    polygon2Graphics.draw(canvas);
 	    polygon3Graphics.draw(canvas);

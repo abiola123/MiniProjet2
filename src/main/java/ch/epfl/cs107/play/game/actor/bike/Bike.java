@@ -203,7 +203,7 @@ public class Bike extends GameEntity implements Actor {
 		leftWheel.destroy();
 		rightWheel.destroy();
 	}
-
+	
 
 
 	public void update(float deltaTime) {

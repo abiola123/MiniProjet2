@@ -4,6 +4,7 @@ import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.actor.ActorGame;
 import ch.epfl.cs107.play.game.actor.GameEntity;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
+import ch.epfl.cs107.play.game.actor.bike.Bike;
 import ch.epfl.cs107.play.math.BasicContactListener;
 import ch.epfl.cs107.play.math.Circle;
 import ch.epfl.cs107.play.math.Contact;
@@ -35,10 +36,10 @@ private BasicContactListener contactListener ;
 		super(game,fixed,position);
 		partBuilder = body.createPartBuilder();
 		//we do not need a modifiable radius for the cirlce beacause we do not want to modify it later ?
-		Circle circle = new Circle (0.1f);
+		Circle circle = new Circle (1f);
 		partBuilder.setShape(circle);
-		partBuilder.build();
 		partBuilder.setGhost(true);
+		partBuilder.build();
 		finishGraphics = new ImageGraphics(graphics,1,1);
 		finishGraphics.setParent(body);
 		
@@ -46,15 +47,7 @@ private BasicContactListener contactListener ;
 		body.addContactListener(contactListener) ;
 		
 		
-//		
-//		//this is for the flag in the beggining of the game
-//		partBuilder2 = body2.createPartBuilder();
-//		Circle circle2 = new Circle (1f);
-//		partBuilder2.setShape(circle2);
-//		partBuilder2.build();
-//		partBuilder.setGhost(true);
-//		flagGraphics = new ImageGraphics("flag.yellow.png",1,1);
-//		flagGraphics.setParent(body2);
+
 	}
 	
 	public void setFinishGraphics(String graphics) {
@@ -62,7 +55,9 @@ private BasicContactListener contactListener ;
 		finishGraphics.setParent(body);
 	}
 	
-	
+	public boolean contact(Entity entity) {
+		return contactListener.hasContactWith(entity);
+	}
 
 
 	@Override
@@ -74,17 +69,17 @@ private BasicContactListener contactListener ;
 	@Override
 	public void draw(Canvas canvas) {
 		finishGraphics.draw(canvas);
-//		flagGraphics.draw(canvas);
+
 		
 	}
 	
-	public void update(float deltaTime) {
-		int numberOfCollisions = contactListener. getEntities ().size() ;
-		if (numberOfCollisions > 0){
-		setFinishGraphics("flag.green.png") ;
-		}
+//	public void update(float deltaTime) {
+//		int numberOfCollisions = contactListener. getEntities ().size() ;
+//		if (contact(Entity entity)){
+//		setFinishGraphics("flag.green.png") ;
+//		}
 
-	}
+	
 }
 
 

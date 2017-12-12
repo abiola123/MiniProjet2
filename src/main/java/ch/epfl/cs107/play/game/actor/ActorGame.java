@@ -34,7 +34,7 @@ public abstract class ActorGame implements Game {
 	//viewCandidate à chaque update
 	private static final float VIEW_TARGET_VELOCITY_COMPENSATION = 0.2f ;
 	private static final float VIEW_INTERPOLATION_RATIO_PER_SECOND = 0.1f ;
-	private static final float VIEW_SCALE = 14.0f ;
+	private static final float VIEW_SCALE = 30.0f ;
 	private ArrayList<Actor> operatingActor = new ArrayList<Actor>();
 	private Entity vehicle;
 	private Entity body;
@@ -104,6 +104,7 @@ public abstract class ActorGame implements Game {
 	 * @param deltaTime elapsed time since last update , in
 	seconds , non -negative
 	 */
+	@Override
 	public void update(float deltaTime) {
 		world.update(deltaTime);
 

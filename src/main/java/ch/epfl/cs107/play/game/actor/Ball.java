@@ -23,13 +23,14 @@ public class Ball extends GameEntity implements Actor{
 	private Color outerColor;
 	private boolean shapeGraphics = false;
 	private boolean imageGraphics = false ;
-
+	private Vector position;
 	public Ball(ActorGame game,boolean fixed, Vector position, float radius, Color innerColor, Color outerColor) {
 		super(game,fixed,position);
 		this.game = game;
 		this.outerColor = outerColor;
 		this.innerColor = innerColor;
 		this.radius = radius;
+		this.position = position;
 		PartBuilder partBuilder = ball.createPartBuilder();
 		Circle circle = new Circle(radius);
 		partBuilder.setShape(circle);
@@ -50,13 +51,15 @@ public class Ball extends GameEntity implements Actor{
 		super(game,fixed,position);
 		this.game = game;
 		this.radius = radius;
+		this.position = position;
 		PartBuilder partBuilder = ball.createPartBuilder();
 		Circle circle = new Circle(radius);
 		partBuilder.setShape(circle);
 		partBuilder.build();
 		
-		ballGraphics1 = new ImageGraphics(graphics,radius*6,radius*6 );
+		ballGraphics1 = new ImageGraphics(graphics,radius*2,radius*2 );
 		ballGraphics1.setParent(ball);
+		
 		imageGraphics = true;
 	}
 	
@@ -77,6 +80,11 @@ public class Ball extends GameEntity implements Actor{
 	public Transform getTransform() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public Vector getPosition() {
+		return position;
 	}
 
 	@Override

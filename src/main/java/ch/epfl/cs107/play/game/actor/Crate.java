@@ -17,6 +17,7 @@ private ImageGraphics blockGraphics;
 //private float blockWidth;
 //private float blockHeight;
 private String graphics;
+private Vector position;
 
 
 	public Crate(ActorGame game, boolean fixed, Vector position , float blockWidth, float blockHeight, String graphics) {
@@ -28,6 +29,7 @@ private String graphics;
 //		this.blockHeight = blockHeight;
 //		this.blockWidth = blockWidth;
 		this.graphics = graphics;
+		this.position = position;
 		
 	PartBuilder partBuilder = body.createPartBuilder();
 	Polygon polygon = new Polygon (
@@ -62,6 +64,11 @@ public Vector getVelocity() {
 	// TODO Auto-generated method stub
 	return getVelocity();
 }
+
+ @Override 
+ public Vector getPosition() {
+	 return position;
+ }
 
 ////allowed to do this ??
 //public Entity getBody() {
