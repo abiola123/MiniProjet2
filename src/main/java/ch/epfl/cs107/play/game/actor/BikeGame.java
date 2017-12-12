@@ -5,6 +5,7 @@ import java.awt.Color;
 import ch.epfl.cs107.play.game.actor.bike.Bike;
 import ch.epfl.cs107.play.game.actor.general.CrateField;
 import ch.epfl.cs107.play.game.actor.general.Finish;
+import ch.epfl.cs107.play.game.actor.general.Pendule;
 import ch.epfl.cs107.play.game.actor.general.Plank;
 import ch.epfl.cs107.play.game.actor.general.Seasaw;
 import ch.epfl.cs107.play.game.actor.general.Terrain;
@@ -56,15 +57,15 @@ private Vector v2 = (new Vector(0.2f, 7.0f));
 private Vector v3 = (new Vector(2.0f, 6.0f));
 private Vector bikePosition =  (new Vector(40.0f,5.0f));
 private Vector seasawPosition = (new Vector(40.0f, -5.80f));
-private Vector pendulePosition = (new Vector(49.0f    ,25.0f));
+private Vector pendulePosition = (new Vector(49.0f    ,30.0f));
 private Vector pendule2Position = (new Vector(285f   , 5f ));
 private Vector crateFieldPosition = (new Vector(240f,-5f));
 private TextGraphics keysCounter;
-private Vector key1Position =  (new Vector(4.0f, 0.0f));
-private Vector key2Position =  (new Vector(9.0f, 0.0f));
-private Vector key3Position =  (new Vector(7.0f, 0.0f));
-private Vector key4Position =  (new Vector(6.0f, 0.0f));
-private Vector key5Position =  (new Vector(5.0f, 0.0f));
+private Vector key1Position =  (new Vector(49.0f, 13.0f));
+private Vector key2Position =  (new Vector(92.0f, -10.0f));
+private Vector key3Position =  (new Vector(200.0f, 0f));
+private Vector key4Position =  (new Vector(238f, 6.0f));
+private Vector key5Position =  (new Vector(250.0f, 0.0f));
 private Vector key6Position =  (new Vector(11.0f, 0.0f));
 private Vector key7Position =  (new Vector(10.0f, 0.0f));
 private Vector key8Position =  (new Vector(9.0f, 0.0f));
@@ -98,10 +99,10 @@ private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 	    secondCrate = new Crate(this,false,v2,1.0f,1.0f,"crate.3.png");
 		thirdCrate = new Crate(this,false,v3,1.0f,1.0f,"crate.3.png");
 		bike = new Bike(this , false , bikePosition, 0.5f);
-		finishLine = new Finish(this,true,finishLinePosition,"flag.red.png");
-		finishLine2 = new Finish(this,true, new Vector(4f,0f),"flag.yellow.png");
-		pendule = new Pendule(this,true,pendulePosition,1f,"saw.png.png",10.5f);
-		pendule2 = new Pendule(this,true,pendule2Position,2.5f,Color.WHITE,Color.WHITE,14.5f);
+		finishLine = new Finish(this,true,finishLinePosition,"door.closed.png",3f,3f);
+		finishLine2 = new Finish(this,true, new Vector(4f,0f),"flag.green.png",1f,1f);
+//		pendule = new Pendule(this,true,pendulePosition,1f,"saw.png.png",10.5f);
+//		pendule2 = new Pendule(this,true,pendule2Position,2.5f,Color.WHITE,Color.WHITE,14.5f);
 		crateField = new CrateField(this,true,crateFieldPosition);
 		seasaw = new Seasaw(this,true,seasawPosition,10.0f,1.0f,5.0f,0.1f,Color.WHITE, Color.WHITE);
 		
@@ -118,8 +119,8 @@ private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 		actorListAddActor((Actor)finishLine);
 		actorListAddActor((Actor)finishLine2);
 		actorListAddActor((Actor)seasaw);
-		actorListAddActor((Actor)pendule);
-		actorListAddActor((Actor)pendule2);
+//		actorListAddActor((Actor)pendule);
+//		actorListAddActor((Actor)pendule2);
 		actorListAddActor((Actor)crateField);
 		actorListAddActor((Actor)key1);
 		actorListAddActor((Actor)key2);
@@ -150,8 +151,8 @@ private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 		setViewCandidate(bike);
 		super.update(deltaTime);
 		
-		if(contactBikeFinish()) {
-			finishLine.setFinishGraphics("flag.green.png");
+		if(collectedKeys==10) {
+			finishLine.setFinishGraphics("door.open.png");
 		}
 		
 		

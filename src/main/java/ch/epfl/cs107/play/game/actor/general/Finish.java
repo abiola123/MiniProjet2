@@ -15,7 +15,7 @@ import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Finish extends GameEntity implements Actor {
+public class Finish extends Trigger {
 private Entity body = getEntity();
 private Entity body2 = getEntity();
 private ImageGraphics flagGraphics;
@@ -32,15 +32,15 @@ private boolean gotHit;
 private BasicContactListener contactListener ;
 
 
-	public Finish(ActorGame game, boolean fixed , Vector position , String graphics ) {
-		super(game,fixed,position);
+	public Finish(ActorGame game, boolean fixed , Vector position , String graphics , float graphicsWidth, float graphicsHeight) {
+		super(game,fixed,position,graphics,graphicsWidth,graphicsHeight);
 		partBuilder = body.createPartBuilder();
 		//we do not need a modifiable radius for the cirlce beacause we do not want to modify it later ?
 		Circle circle = new Circle (1f);
 		partBuilder.setShape(circle);
 		partBuilder.setGhost(true);
 		partBuilder.build();
-		finishGraphics = new ImageGraphics(graphics,1,1);
+		finishGraphics = new ImageGraphics(graphics,graphicsWidth,graphicsHeight);
 		finishGraphics.setParent(body);
 		
 		contactListener = new BasicContactListener () ;

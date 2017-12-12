@@ -30,22 +30,16 @@ public abstract class ActorGame implements Game {
 	private Vector viewCenter ;
 	private Vector viewTarget ;
 	private Positionable viewCandidate ;
-	//l’on re-centre la caméra directement sur 
-	//viewCandidate à chaque update
+
+	//camera attributs
 	private static final float VIEW_TARGET_VELOCITY_COMPENSATION = 0.2f ;
 	private static final float VIEW_INTERPOLATION_RATIO_PER_SECOND = 0.1f ;
 	private static final float VIEW_SCALE = 70.0f ;
-	private ArrayList<Actor> operatingActor = new ArrayList<Actor>();
-	private Entity vehicle;
-	private Entity body;
-	private Vector anchor; 
-	private Vector axis;
 
-	public boolean direction = true;
-	public boolean blockWheels;
-	public boolean move;
-	public boolean rightShift;
-	public boolean leftShift;
+	//contains all the actors of the game
+	private ArrayList<Actor> operatingActor = new ArrayList<Actor>();
+
+
 
 	public Keyboard getKeyboard(){
 		return window.getKeyboard();
@@ -57,8 +51,9 @@ public abstract class ActorGame implements Game {
 
 	}
 
-	//--------------------------------------------
+	//-------------------------------------------------------------
 
+	//adds actor to operatingActorList
 	public void actorListAddActor(Actor actor) {
 		getOperatingActor().add(actor);
 
@@ -70,7 +65,7 @@ public abstract class ActorGame implements Game {
 		getOperatingActor().remove(indexOfLine);
 	}
 
-	//-----------------------------------------------
+	//-------------------------------------------------------------
 
 	public boolean begin(Window window,FileSystem fileSystem) {
 		this.window = window;
@@ -85,29 +80,31 @@ public abstract class ActorGame implements Game {
 
 	}
 
-	//----------------------------------------------
+	//-------------------------------------------------------------
 
 
 
-// we have to Remove multiple times because otherwise it won´t delete all Actors.
+	//ends game, destroys all the actors and removes them from the operatingActorList
 	public void end() {
-		for(int n = 0; n < 5; n++) {
-			for(int i = 0; i < operatingActor.size(); i++) {
-				actorListRemoveActor(i);
-			}
+		for(int i = 0; i <operatingActor.size(); i++ ) {
+			operatingActor.get(i).destroy();
 		}
+		getOperatingActor().clear();
 	}
 
+	//-------------------------------------------------------------
 
 	/**
 	 * Simulates a single time step.
 	 * @param deltaTime elapsed time since last update , in
 	seconds , non -negative
 	 */
-	@Override
+
+	//-------------------------------------------------------------
+
 	public void update(float deltaTime) {
 		world.update(deltaTime);
-
+		//controls for restarting the game
 		if (window.getKeyboard().get(KeyEvent.VK_R).isPressed()) {
 			end();
 			begin(window, fileSystem);
@@ -143,44 +140,45 @@ public abstract class ActorGame implements Game {
 		return operatingActor;
 	}
 
-	//------------------------------------------------------------
+	//-------------------------------------------------------------
 
 	public void setViewCandidate(Positionable viewCandidate) {
 		this.viewCandidate = viewCandidate;
 
 	}
 
-	//------------------------------------------------------------
+	//-------------------------------------------------------------
 
 	//----------------------CONSTRAINTS----------------------------	
 
-	//To answer Q2 creates entity builder without access to world
+	//Creates entity builder without giving access to world
 	public EntityBuilder CreateEntityBuilder() {
 		return world.createEntityBuilder();
 	}
 
 
-	//wheels for the bike
+	//Creates constraints to attach wheels to the bike
 	public WheelConstraintBuilder CreateWheelConstraintBuilder() {
 		return world.createWheelConstraintBuilder(); }
 
 
-	//plank and circle of the seasaw
+	//Creates constraint to attach the plank and circle of the seasaw
 	public RevoluteConstraintBuilder CreateRevoluteConstraintBuilder() {
 		return world.createRevoluteConstraintBuilder();
 	}
 
-
+	//Creates constraint to attach the circle and the crate of the "pendule"
 	public RopeConstraintBuilder CreateRopeConstraintBuilder() {
 		return world.createRopeConstraintBuilder();
 	}
 
-
-
-
-
 	//--------------------------------------------------------------
 
+
+	//Used for GravityWell extension , keeps world private
+	public void setWellGravity(Vector gravity) {
+		world.setGravity(gravity);
+	}
 }
 
 

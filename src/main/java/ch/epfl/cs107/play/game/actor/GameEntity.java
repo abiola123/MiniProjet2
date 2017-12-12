@@ -1,35 +1,25 @@
 package ch.epfl.cs107.play.game.actor;
 
-import ch.epfl.cs107.play.math.Entity;
-import ch.epfl.cs107.play.math.EntityBuilder;
-import ch.epfl.cs107.play.math.PartBuilder;
-import ch.epfl.cs107.play.math.Vector;
-import ch.epfl.cs107.play.math.World;
-
-import org.jbox2d.dynamics.contacts.Velocity;
-
-import ch.epfl.cs107.play.game.actor.bike.Bike;
 import ch.epfl.cs107.play.game.actor.general.Wheel;
-import ch.epfl.cs107.play.math.BasicContactListener;
-import ch.epfl.cs107.play.math.Circle;
 import ch.epfl.cs107.play.math.Contact;
 import ch.epfl.cs107.play.math.ContactListener;
-import ch.epfl.cs107.play.math.Polygon;
-import ch.epfl.cs107.play.math.Shape;
+import ch.epfl.cs107.play.math.Entity;
+import ch.epfl.cs107.play.math.EntityBuilder;
+import ch.epfl.cs107.play.math.Vector;
+
 
 
 public abstract class GameEntity {
 
 	private ActorGame game;
 	private Entity body;
-	private Contact contact;
 	private ContactListener contactListener;
 
 	// protected allow a better protection and prevent the modification outside of the package
 	// protected still allows whole access in the same package, just like "public" would do normally and this is not always wanted
 
 
-
+	//creates the basis for a  GameEntity
 	public GameEntity(ActorGame game, boolean fixed , Vector position) {
 		this.game = game;
 
@@ -49,21 +39,22 @@ public abstract class GameEntity {
 		body = entityBuilder.build();	
 	}
 
-
+	//destroys body of the GameEntity
 	public void destroy() {
 		body.destroy();
 	}
 
+	//returns entity of the GameEntity
 	protected Entity getEntity() {
 		return body;
 	}
 
-
-	public float getWheelSpeed(Wheel wheel) {
+	//returns angular position of wheels (used for cycling animation extension)
+	public float getWheelAngle(Wheel wheel) {
 		return wheel.getEntity().getAngularPosition();
 	}
 
-
+	//checks if any of the wheels of the bike are in contact with any object
 	public boolean contactBikeWithPolyline(Contact contact ,  Wheel leftWheel , Wheel rightWheel) {
 		return (contact.getOther().getEntity() == leftWheel.getEntity() || contact.getOther().getEntity() == rightWheel.getEntity());
 
@@ -71,6 +62,7 @@ public abstract class GameEntity {
 
 	}
 
+	//adds a contactListener
 	public void addContactListener(ContactListener listener) {
 		body.addContactListener(listener);
 		contactListener = listener;
@@ -79,17 +71,13 @@ public abstract class GameEntity {
 
 
 
-
-
-
-
-
-	//protected ou public ?
+	//returns an entity's velocity
 	public Vector getVelocity() {
 		Vector velocity = body.getVelocity();
 		return velocity;
 
 	}
+
 
 	protected ActorGame getOwner() {
 		return game;

@@ -1,7 +1,12 @@
-package ch.epfl.cs107.play.game.actor;
+package ch.epfl.cs107.play.game.actor.general;
 
 import java.awt.Color;
 
+import ch.epfl.cs107.play.game.actor.Actor;
+import ch.epfl.cs107.play.game.actor.ActorGame;
+import ch.epfl.cs107.play.game.actor.Crate;
+import ch.epfl.cs107.play.game.actor.GameEntity;
+import ch.epfl.cs107.play.game.actor.ShapeGraphics;
 import ch.epfl.cs107.play.math.Entity;
 import ch.epfl.cs107.play.math.PartBuilder;
 import ch.epfl.cs107.play.math.Polyline;
@@ -44,7 +49,7 @@ public class Pendule  extends GameEntity implements Actor  {
 		super(game,fixed,position);
 		this.position = position;
 
-		Vector ballPos = position.add(-50000f,-100000.f);
+//		Vector ballPos = position.add(-50000f,-100000.f);
 
 		crate = new Crate(game,fixed,position,2f,2f,"metal.broken.hollow.1.png");
 		bodyBlock = crate.getEntity();

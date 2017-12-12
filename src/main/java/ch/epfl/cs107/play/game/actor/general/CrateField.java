@@ -4,7 +4,6 @@ import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.actor.ActorGame;
 import ch.epfl.cs107.play.game.actor.Crate;
 import ch.epfl.cs107.play.game.actor.GameEntity;
-import ch.epfl.cs107.play.game.actor.ImageGraphics;
 import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
@@ -12,26 +11,24 @@ import ch.epfl.cs107.play.window.Canvas;
 public class CrateField extends GameEntity implements Actor {
 	private Crate crate1 ,crate2 ,crate3 ,crate4 ,crate5 ,crate6 ,crate7 ,crate8 ,crate9 ,crate10 ,crate11 ,crate12 ,crate13 ,crate14 ,crate15 ,crate16 ,crate17 ,crate18 ,crate19 ,crate20 ,crate21 ,crate22 ,crate23 ,crate24 ,crate25 ,crate26 ,crate27,
 	crate28 ,crate29 ,crate30 ,crate31 ,crate32 ,crate33 ,crate34 ,crate35 ,crate36 ,crate37 ,crate38 ,crate39 ,crate40 ,crate41 ,crate42 ,crate43 ,crate44 ,crate45 ,crate46 ,crate47 ,crate48 ,crate49 ,crate50 ;
-	private ImageGraphics c1;
-	private ImageGraphics c2;
 	
-	
-//	,crate ,
-//	crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,
-//	crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,crate ,;
-	
-	private ActorGame game;
-	private Vector position;
-	
+
+
+
+
+
+
 	public CrateField(ActorGame game, boolean fixed, Vector position) {
 		super(game,fixed,position);
-		this.position = position;
-		int numberofCrate = 100;
+
+
+
+
+
+
+
+		//the only solution was to create all the crates separately :(
 		
-		
-		
-		
-	
 		crate1 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate2 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate3 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
@@ -42,14 +39,14 @@ public class CrateField extends GameEntity implements Actor {
 		crate8 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate9 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate10= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-		crate11 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-		crate12 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-		crate13 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-		crate14 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-		crate15 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-		crate16 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-		crate17 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-		crate18 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
+		crate11= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
+		crate12= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
+		crate13= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
+		crate14= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
+		crate15= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
+		crate16= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
+		crate17= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
+		crate18= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate19= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate20= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate21= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
@@ -82,82 +79,16 @@ public class CrateField extends GameEntity implements Actor {
 		crate48= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate49= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate50= new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
-	
-		
-		
-		
-		
-		
-		
-		
-//		createCrate(crate1);
-//		createCrate(crate2);
-//		createCrate(crate3);
-//		createCrate(crate4);
-//		createCrate(crate5);
-//		createCrate(crate6);
-//		createCrate(crate7);
-//		createCrate(crate8);
-//		createCrate(crate9);
-//		createCrate(crate10);
-//		createCrate(crate11);
-//		createCrate(crate12);
-//		createCrate(crate13);
-//		createCrate(crate14);
-//		createCrate(crate15);
-//		createCrate(crate16);
-//		createCrate(crate17);
-//		createCrate(crate18);
-//		createCrate(crate19);
-//		createCrate(crate20);
-//		createCrate(crate21);
-//		createCrate(crate22);
-//		createCrate(crate23);
-//		createCrate(crate24);
-//		createCrate(crate25);
-//		createCrate(crate26);
-//		createCrate(crate27);
-//		createCrate(crate28);
-//		createCrate(crate29);
-//		createCrate(crate30);
-//		createCrate(crate31);
-//		createCrate(crate32);
-//		createCrate(crate33);
-//		createCrate(crate34);
-//		createCrate(crate35);
-//		createCrate(crate36);
-//		createCrate(crate37);
-//		createCrate(crate38);
-//		createCrate(crate39);
-//		createCrate(crate40);
-//		createCrate(crate41);
-//		createCrate(crate42);
-//		createCrate(crate43);
-//		createCrate(crate44);
-//		createCrate(crate45);
-//		createCrate(crate46);
-//		createCrate(crate47);
-//		createCrate(crate48);
-//		createCrate(crate49);
-//		createCrate(crate50);
-//		
-//		
-//		
-//		
-//		
-		
-		
-		
+
+
+
 	}
-	
-	public void createCrate(Crate crate) {
-		crate = new Crate(game,false,position,2.0f,2.0f,"crate.3.png");
-	}
+
 
 	@Override
 	public Transform getTransform() {
 		// TODO Auto-generated method stub
-		return null;
+		return getTransform();
 	}
 
 	@Override
@@ -214,6 +145,6 @@ public class CrateField extends GameEntity implements Actor {
 		crate48.draw(canvas);
 		crate49.draw(canvas);
 		crate50.draw(canvas);
-		
+
 	}
 }

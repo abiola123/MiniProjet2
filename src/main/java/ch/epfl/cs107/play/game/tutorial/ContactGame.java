@@ -100,10 +100,6 @@ public class ContactGame implements Game {
 	public void end() {
 	}
 
-	@Override
-	public void update(Float deltaTime) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
 	

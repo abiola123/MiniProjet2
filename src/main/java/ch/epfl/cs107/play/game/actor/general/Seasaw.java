@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.actor.ActorGame;
-import ch.epfl.cs107.play.game.actor.Ball;
 import ch.epfl.cs107.play.game.actor.GameEntity;
 import ch.epfl.cs107.play.math.BasicContactListener;
 import ch.epfl.cs107.play.math.Entity;

@@ -25,6 +25,6 @@ public interface Game {
     /** Cleans up things, called even if initialisation failed. */
     public abstract void end();
 
-	public void update(Float deltaTime);
+
     
 }

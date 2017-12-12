@@ -86,8 +86,8 @@ public class Terrain extends GameEntity implements Actor {
 					48.0f    , 	 	 13.0f,
 					50f      ,   	 13.0f,
 					65f      ,   	 6.5f,
-					80f   	,    	 0.0f,
-					90f     ,       -5f
+					80f   	,    	 0.0f
+//					90f     ,       -5f
 					
 
 					);
@@ -108,7 +108,7 @@ public class Terrain extends GameEntity implements Actor {
 					110f, -10f
 					);
 			
-			createPolygon(polygon1,poly1,1.0f,partBuilder2 );
+			createPolygon(polygon1,poly1,2.0f,partBuilder2 );
 			polygon1Graphics = new ShapeGraphics(polygon1,Color.GRAY,Color.WHITE,.1f,1.f,0);
 			polygon1Graphics.setParent(poly1);
 
@@ -279,33 +279,7 @@ public class Terrain extends GameEntity implements Actor {
 			line8Graphics = new ShapeGraphics(polyline8,null,Color.WHITE,.1f,1.f,0);
 			line8Graphics.setParent(line8);
 			
-//			partBuilder.setShape(polyline1);
-//			partBuilder.setFriction(1);
-//			partBuilder.build();
 //			
-//			partBuilder.setShape(polyline2);
-//			partBuilder.setFriction(0.7f);
-//			partBuilder.build();
-//			
-//			partBuilder.setShape(polyline3);
-//			partBuilder.setFriction(1);
-//			partBuilder.build();
-//			
-//			partBuilder.setShape(polygon1_shape);
-//			partBuilder.setFriction(1);
-//			partBuilder.build();
-//			
-//			lineGraphics1 = new ShapeGraphics(polyline1,null,Color.WHITE,.1f,1.f,0);
-//			lineGraphics1.setParent(line1);
-//			
-//			lineGraphics2 = new ShapeGraphics(polyline2,null,Color.GREEN,.1f,1.f,0);
-//			lineGraphics2.setParent(line2);
-//			
-//			lineGraphics3 = new ShapeGraphics(polyline3,null,Color.WHITE,.1f,1.f,0);
-//			lineGraphics3.setParent(line3);
-//			
-//			 polygon1Graphics = new ShapeGraphics(polygon1_shape,null,Color.GREEN,.1f,1.f,0);
-//			 polygon1Graphics.setParent(polygon1);
 //		}
 //		
 //	

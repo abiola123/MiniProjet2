@@ -28,11 +28,11 @@ public class Trigger extends GameEntity implements Actor{
 		super(game,fixed,position);
 
 		partBuilder = body.createPartBuilder();
-		Circle circle = new Circle(1f);
+		Circle circle = new Circle(1.5f);
 		partBuilder.setShape(circle);
 		partBuilder.setGhost(true);
 		partBuilder.build();
-		triggerGraphics = new ImageGraphics(graphics,1,1);
+		triggerGraphics = new ImageGraphics(graphics,graphicsWidth,graphicsHeight);
 		triggerGraphics.setParent(body);
 
 		contactListener = new BasicContactListener () ;

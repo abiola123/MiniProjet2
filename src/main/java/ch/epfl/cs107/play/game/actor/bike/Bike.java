@@ -169,11 +169,11 @@ public class Bike extends GameEntity implements Actor {
 		float wheelSpeed = 0;
 
 		if(directionR) {
-			wheelSpeed = getWheelSpeed(leftWheel);
+			wheelSpeed = getWheelAngle(leftWheel);
 		}
 
 		if(!directionR) {
-			wheelSpeed = -getWheelSpeed(rightWheel);
+			wheelSpeed = -getWheelAngle(rightWheel);
 		}
 
 		getRightFootLocation = new Vector(0f,0.1f).add((float)(0.2*Math.cos(wheelSpeed)),(float)(0.2*Math.sin(wheelSpeed)));

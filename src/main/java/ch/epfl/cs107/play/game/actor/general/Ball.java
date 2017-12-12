@@ -1,7 +1,12 @@
-package ch.epfl.cs107.play.game.actor;
+package ch.epfl.cs107.play.game.actor.general;
 
 import java.awt.Color;
 
+import ch.epfl.cs107.play.game.actor.Actor;
+import ch.epfl.cs107.play.game.actor.ActorGame;
+import ch.epfl.cs107.play.game.actor.GameEntity;
+import ch.epfl.cs107.play.game.actor.ImageGraphics;
+import ch.epfl.cs107.play.game.actor.ShapeGraphics;
 import ch.epfl.cs107.play.math.Circle;
 import ch.epfl.cs107.play.math.Entity;
 import ch.epfl.cs107.play.math.PartBuilder;
@@ -24,28 +29,39 @@ public class Ball extends GameEntity implements Actor{
 	private boolean shapeGraphics = false;
 	private boolean imageGraphics = false ;
 	private Vector position;
+
+	
+	//--------------------------------------------------------------	
+	
+	
+	//creates an entity that is attached to the "pendule"
 	public Ball(ActorGame game,boolean fixed, Vector position, float radius, Color innerColor, Color outerColor) {
 		super(game,fixed,position);
 		this.game = game;
-		this.outerColor = outerColor;
-		this.innerColor = innerColor;
-		this.radius = radius;
+		//		this.outerColor = outerColor;
+		//		this.innerColor = innerColor;
+		//		this.radius = radius;
 		this.position = position;
 		PartBuilder partBuilder = ball.createPartBuilder();
 		Circle circle = new Circle(radius);
 		partBuilder.setShape(circle);
 		partBuilder.build();
-		
+
 		ballGraphics = new ShapeGraphics(circle,innerColor,outerColor,.1f,1f,0 );
 		ballGraphics.setParent(ball);
-		
-		
-		
-		 shapeGraphics = true;
-		
-		
-		
+
+
+		//boolean used to draw the correct graphics
+		shapeGraphics = true;
+
+
+
 	}
+
+	
+	//--------------------------------------------------------------	
+	
+	
 	
 	public Ball(ActorGame game,boolean fixed, Vector position, float radius, String graphics) {
 		super(game,fixed,position);
@@ -56,32 +72,35 @@ public class Ball extends GameEntity implements Actor{
 		Circle circle = new Circle(radius);
 		partBuilder.setShape(circle);
 		partBuilder.build();
-		
+
 		ballGraphics1 = new ImageGraphics(graphics,radius*2,radius*2 );
 		ballGraphics1.setParent(ball);
-		
+
+		//boolean used to draw the correct graphics
 		imageGraphics = true;
 	}
-	
+
+	//creates a constraint between ball and crate
 	public void attach(Entity bodyBlock , float blockWidth, float blockHeight, float maxConstraintLength) {
 		RopeConstraintBuilder ropeConstraintBuilder  =	game.CreateRopeConstraintBuilder();
-		 ropeConstraintBuilder.setFirstEntity(bodyBlock) ;
-		 ropeConstraintBuilder.setFirstAnchor(new Vector(blockWidth /2,
-		 (blockHeight *7) /4)) ;
-		 ropeConstraintBuilder.setSecondEntity(ball) ;
-		 ropeConstraintBuilder.setSecondAnchor(Vector.ZERO) ;
-		 ropeConstraintBuilder.setMaxLength (maxConstraintLength) ;
-		 ropeConstraintBuilder.setInternalCollision(true) ;
-		 ropeConstraintBuilder.build () ;
-		 constraint = ropeConstraintBuilder.build();
-		
-	}
-	@Override
-	public Transform getTransform() {
-		// TODO Auto-generated method stub
-		return null;
+		ropeConstraintBuilder.setFirstEntity(bodyBlock) ;
+		ropeConstraintBuilder.setFirstAnchor(new Vector(blockWidth /2,
+				(blockHeight *7) /4)) ;
+		ropeConstraintBuilder.setSecondEntity(ball) ;
+		ropeConstraintBuilder.setSecondAnchor(Vector.ZERO) ;
+		ropeConstraintBuilder.setMaxLength (maxConstraintLength) ;
+		ropeConstraintBuilder.setInternalCollision(true) ;
+		ropeConstraintBuilder.build () ;
+		constraint = ropeConstraintBuilder.build();
+
 	}
 	
+	//--------------------------------------------------------------	
+	@Override
+	public Transform getTransform() {
+		return getTransform();
+	}
+
 	@Override
 	public Vector getPosition() {
 		return position;
@@ -90,9 +109,9 @@ public class Ball extends GameEntity implements Actor{
 	@Override
 	public void draw(Canvas canvas) {
 		if(shapeGraphics)
-		ballGraphics.draw(canvas);
+			ballGraphics.draw(canvas);
 		if(imageGraphics)
-		ballGraphics1.draw(canvas);
-		
+			ballGraphics1.draw(canvas);
+
 	}
 }
