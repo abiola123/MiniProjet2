@@ -64,8 +64,6 @@ public class BikeGame extends ActorGame{
 	private float timeSinceEnd = 0;
 	private ArrayList<Integer> collectedKeys = new ArrayList<Integer>();
 
-
-	//vecteur finish line a changer 
 	private Vector startingPosition = (new Vector(5f,1.0f));
 	private Vector finishLinePosition = new Vector(420.0f, 30f);
 	private Vector terrainPosition = new Vector(0.0f,0.0f);
@@ -102,8 +100,12 @@ public class BikeGame extends ActorGame{
 		//keys counter
 		keysCounter = new TextGraphics("",0.05f,Color.YELLOW,Color.GRAY,0.01f,false,false,keysCounterPosition,0.8f,2.0f);
 
+		//sets initial position
 		setBikePosition(startingPosition);
+		
+		//creates all actors
 		terrain = new Terrain(this,true,terrainPosition);
+		//keys need to be collected in order to finish this level
 		key1 = new Trigger(this,true,key1Position,"key.yellow.png", 1, 1);
 		key2 = new Trigger(this,true,key2Position,"key.yellow.png", 1, 1);
 		key3 = new Trigger(this,true,key3Position,"key.yellow.png", 1, 1);
@@ -130,9 +132,11 @@ public class BikeGame extends ActorGame{
 		arrow2 = new Arrow(this, true, new Vector(365,10), "arrow.white.png", 1f,1f);
 		arrow3 = new Arrow(this, true, new Vector(375,20), "arrow.white.png", 1f,1f);
 		
+		//creates a contact listener to check contact with the finish line
 		contactListener = new BasicContactListener();
 		finishLine.addContactListener(contactListener);
-
+		
+		//displays messages on screen
 		message_up = new TextGraphics("", .4f, Color.WHITE, Color.GRAY, 0.02f, true,
 				false, new Vector(0.5f,-1.5f), 1.0f, 2.0f);
 		message_down = new TextGraphics("", .4f, Color.WHITE, Color.GRAY, 0.02f, true,
@@ -145,6 +149,7 @@ public class BikeGame extends ActorGame{
 		message_down.setParent(getCanvas());
 		message_down.draw(getCanvas());
 
+		//makes sure one can't "cheat" to get the keys
 		if(startingPosition == checkPointPosition) {
 			while(collectedKeys.size()> keysAtCheckPoint) {
 				collectedKeys.remove(1);
@@ -166,7 +171,7 @@ public class BikeGame extends ActorGame{
 		contactListenerWell = new BasicContactListener();
 		gravityWell.addContactListener(contactListenerWell);
 
-
+		//adds all the actors to the operatingActorList
 		actorListAddActor((Actor)terrain);
 		actorListAddActor((Actor)firstCrate);
 		actorListAddActor((Actor)secondCrate);
