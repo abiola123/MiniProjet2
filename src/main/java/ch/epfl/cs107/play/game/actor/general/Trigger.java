@@ -57,7 +57,7 @@ public class Trigger extends GameEntity implements Actor{
 
 	@Override
 	public Transform getTransform() {
-		return getTransform();
+		return null;
 	}
 
 

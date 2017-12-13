@@ -75,9 +75,7 @@ public abstract class ActorGame implements Game {
 		viewTarget = Vector.ZERO;
 		world.setGravity(new Vector(0.0f, -9.81f));
 
-
 		return true;
-
 	}
 
 	//-------------------------------------------------------------

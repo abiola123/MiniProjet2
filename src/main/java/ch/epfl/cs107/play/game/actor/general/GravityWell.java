@@ -39,9 +39,13 @@ public class GravityWell extends GameEntity implements Actor{
 		createPolygon(polygon,poly,partBuilder);
 		polygonGraphics = new ShapeGraphics(polygon,fillColor,outlineColor,.1f,.2f,0);
 		polygonGraphics.setParent(poly);
-		poly.applyForce(new Vector(43f,52f),new Vector(55f,43f));
-		
 	}
+	
+//	public void applyForce(Vector vector1, Vector vector2) {
+//		poly.applyForce(vector1,vector2);
+//	}
+		
+	
 
 
 

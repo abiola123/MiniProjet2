@@ -2,11 +2,13 @@ package ch.epfl.cs107.play.game.actor.bike;
 
 
 import java.awt.Color;
+import java.util.Date;
 
 import com.sun.glass.events.KeyEvent;
 
 import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.actor.ActorGame;
+import ch.epfl.cs107.play.game.actor.BikeGame;
 import ch.epfl.cs107.play.game.actor.GameEntity;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
 import ch.epfl.cs107.play.game.actor.ShapeGraphics;
@@ -36,18 +38,20 @@ public class Bike extends GameEntity implements Actor {
 	private Wheel rightWheel;
 	// plus propre, recevoir dans constructeur la direction
 	private Boolean directionR = true;
-	private Float MAX_WHEEL_SPEED = 20.0f;
+	private Float MAX_WHEEL_SPEED = 15.0f;
 	private Vector position;
-	private Vector getRightFootLocation;
-	private Vector getLeftFootLocation;
-	private Vector getRightKneeLocation;
-	private Vector getLeftKneeLocation;
+	private Vector rightFootLocation;
+	private Vector leftFootLocation;
+	private Vector rightKneeLocation;
+	private Vector leftKneeLocation;
+	private Vector handLocation = new Vector(0.5f,1.0f);
+
 
 	//	private ContactListener listener;
 	private boolean gotHit;
+	private boolean wasHit;
 
 	float timeSinceCollision = 0;
-
 
 
 	ContactListener listener = new ContactListener () {
@@ -121,8 +125,8 @@ public class Bike extends GameEntity implements Actor {
 	}
 
 	// Hand location, in local coordinates
-	private Vector getHandLocation() {
-		return new Vector(0.5f, 1.0f);
+	public void setHandLocation() {
+		handLocation = new Vector(0.7f,1.7f);
 	}
 
 	// Head location, in local coordinates
@@ -140,20 +144,20 @@ public class Bike extends GameEntity implements Actor {
 		animate();
 
 		if(directionR) {
-			drawChar(arm, getShoulderLocation(), getHandLocation(), canvas);
+			drawChar(arm, getShoulderLocation(), handLocation, canvas);
 			drawChar(back, getShoulderLocation(), getBodyCentreLocation(), canvas);
-			drawChar(leftTLeg, getBodyCentreLocation(), getLeftKneeLocation,canvas);
-			drawChar(rightTLeg, getBodyCentreLocation(), getRightKneeLocation, canvas);
-			drawChar(leftBLeg,getLeftKneeLocation, getLeftFootLocation, canvas);
-			drawChar(rightBLeg, getRightKneeLocation, getRightFootLocation, canvas);
+			drawChar(leftTLeg, getBodyCentreLocation(), leftKneeLocation,canvas);
+			drawChar(rightTLeg, getBodyCentreLocation(), rightKneeLocation, canvas);
+			drawChar(leftBLeg, leftKneeLocation, leftFootLocation, canvas);
+			drawChar(rightBLeg, rightKneeLocation, rightFootLocation, canvas);
 
 		} else if (!directionR) {
-			drawChar(arm, getShoulderLocation().mul(-1, 1), getHandLocation().mul(-1,1), canvas);
+			drawChar(arm, getShoulderLocation().mul(-1, 1), handLocation.mul(-1,1), canvas);
 			drawChar(back, getShoulderLocation().mul(-1, 1), getBodyCentreLocation().mul(-1, 1), canvas);
-			drawChar(leftTLeg, getBodyCentreLocation().mul(-1, 1), getLeftKneeLocation.mul(-1, 1),canvas);
-			drawChar(rightTLeg, getBodyCentreLocation().mul(-1, 1), getRightKneeLocation.mul(-1, 1), canvas);
-			drawChar(leftBLeg,getLeftKneeLocation.mul(-1, 1), getLeftFootLocation.mul(-1, 1), canvas);
-			drawChar(rightBLeg, getRightKneeLocation.mul(-1, 1), getRightFootLocation.mul(-1, 1), canvas);
+			drawChar(leftTLeg, getBodyCentreLocation().mul(-1, 1), leftKneeLocation.mul(-1, 1),canvas);
+			drawChar(rightTLeg, getBodyCentreLocation().mul(-1, 1), rightKneeLocation.mul(-1, 1), canvas);
+			drawChar(leftBLeg, leftKneeLocation.mul(-1, 1), leftFootLocation.mul(-1, 1), canvas);
+			drawChar(rightBLeg, rightKneeLocation.mul(-1, 1), rightFootLocation.mul(-1, 1), canvas);
 		}
 	}
 
@@ -176,11 +180,11 @@ public class Bike extends GameEntity implements Actor {
 			wheelSpeed = -getWheelAngle(rightWheel);
 		}
 
-		getRightFootLocation = new Vector(0f,0.1f).add((float)(0.2*Math.cos(wheelSpeed)),(float)(0.2*Math.sin(wheelSpeed)));
-		getLeftFootLocation = new Vector(0f, 0.1f).add(-(float)(0.2*Math.cos(wheelSpeed)),-(float)(0.2*Math.sin(wheelSpeed)));
+		rightFootLocation = new Vector(0f,0.1f).add((float)(0.2*Math.cos(wheelSpeed)),(float)(0.2*Math.sin(wheelSpeed)));
+		leftFootLocation = new Vector(0f, 0.1f).add(-(float)(0.2*Math.cos(wheelSpeed)),-(float)(0.2*Math.sin(wheelSpeed)));
 
-		getRightKneeLocation = new Vector(0.1f, 0.6f).add((float)(0.05*Math.cos(wheelSpeed)),(float)(0.05*Math.sin(wheelSpeed)));
-		getLeftKneeLocation = new Vector(0.1f, 0.6f).add(-(float)(0.05*Math.cos(wheelSpeed)),-(float)(0.05*Math.sin(wheelSpeed)));
+		rightKneeLocation = new Vector(0.1f, 0.6f).add((float)(0.05*Math.cos(wheelSpeed)),(float)(0.05*Math.sin(wheelSpeed)));
+		leftKneeLocation = new Vector(0.1f, 0.6f).add(-(float)(0.05*Math.cos(wheelSpeed)),-(float)(0.05*Math.sin(wheelSpeed)));
 	}
 
 
@@ -203,23 +207,25 @@ public class Bike extends GameEntity implements Actor {
 		leftWheel.destroy();
 		rightWheel.destroy();
 	}
-	
+
 
 
 	public void update(float deltaTime) {
 		//ContactListener
 
 		if(gotHit) {
+			setWasHit(true);
+		}
+		
+		if(wasHit) {
 			rightWheel.detach();
 			leftWheel.detach();
 
 			// delayer
 			timeSinceCollision += deltaTime;
-			if(timeSinceCollision > 1.2f) {
+			if(timeSinceCollision > 3.5f) {
 				this.destroy();
 			}
-
-
 		}
 
 
@@ -275,24 +281,15 @@ public class Bike extends GameEntity implements Actor {
 
 	}
 
-	public boolean gotHit() {
-		return gotHit;
+	private void setWasHit(boolean gothitonce) {
+		if(gothitonce) {
+			wasHit = true;
+		}
+	}
+
+	public boolean wasHit() {
+		return wasHit;
 	}
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
