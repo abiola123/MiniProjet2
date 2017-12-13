@@ -49,9 +49,7 @@ public class BikeGame2 extends ActorGame {
 	private float timeSinceStart = 0;
 	private float timeSinceEnd = 0;
 
-	//vecteur finish line a changer 
 	private Vector startingPosition = new Vector(4.0f,7.0f);
-	private Vector finishLinePosition = new Vector(10.0f, 0f);
 	private Vector terrainPosition = new Vector(0.0f,0.0f);
 	private Vector v1 = (new Vector(0.0f, 5.0f));
 	private Vector v2 = (new Vector(0.2f, 7.0f));
@@ -66,8 +64,12 @@ public class BikeGame2 extends ActorGame {
 		super.begin(window, fileSystem);
 		this.window = window;
 		this.fileSystem = fileSystem;
-
+		
+		
+		//sets the starting position of the bike
 		setPosition(startingPosition);
+		
+		//creates all actors
 		terrain2 = new Terrain2(this,true,terrainPosition);
 		bike = new Bike(this , false , bikePosition, 0.5f);
 		gravityWell = new GravityWell(this,true,new Vector(45,-20), 17, 30,Color.BLUE,Color.WHITE);
@@ -80,7 +82,8 @@ public class BikeGame2 extends ActorGame {
 		arrow2 = new Arrow(this, true, new Vector(52,-10), "arrow.white.png", 1f,1f);
 		arrow3 = new Arrow(this, true, new Vector(57,-3), "arrow.white.png", 1f,1f);
 
-
+		
+		//creating the messages displayed on the screen
 		message = new TextGraphics("", .4f, Color.WHITE, Color.GRAY, 0.02f, true,
 				false, new Vector(0.5f,-1.5f), 1.0f, 2.0f);
 		message2 = new TextGraphics("", .4f, Color.WHITE, Color.GRAY, 0.02f, true,
@@ -93,6 +96,8 @@ public class BikeGame2 extends ActorGame {
 		message2.setParent(getCanvas());
 		message2.draw(getCanvas());
 
+		
+		//creating contact listeners for the finishLine and both gravityfields
 		contactListener = new BasicContactListener();
 		finishLine.addContactListener(contactListener);
 
@@ -102,7 +107,7 @@ public class BikeGame2 extends ActorGame {
 		contactListenerWell2 = new BasicContactListener();
 		gravityWell2.addContactListener(contactListenerWell2);
 
-
+		// adds all actors to the ioperatingActorList
 		actorListAddActor((Actor)terrain2);
 		actorListAddActor((Actor)gravityWell);
 		actorListAddActor((Actor)gravityWell2);
@@ -115,6 +120,7 @@ public class BikeGame2 extends ActorGame {
 		actorListAddActor((Actor)arrow2);
 		actorListAddActor((Actor)arrow3);
 
+		//centers the camera on the bike
 		this.setViewCandidate(bike);
 
 		return true;
@@ -123,12 +129,14 @@ public class BikeGame2 extends ActorGame {
 
 	public void update(float deltaTime) {
 
+		//centers the camera on the bike
 		setViewCandidate(bike);
 		super.update(deltaTime);
 
+		//calls setHit() to check if the bike touches the finish line
 		setHit();
 
-		// delayer
+		//delayer for the text
 		timeSinceStart += deltaTime;
 		if(timeSinceStart < 1f) {
 			message.setText("START");
@@ -138,7 +146,8 @@ public class BikeGame2 extends ActorGame {
 			message.setText("");
 			message.draw(getCanvas());
 		}
-
+		
+		//if you fail, timer allows to displays a message and to view the animation before end() command is called
 		if (bike.wasHit()) {
 			endingMessage("YOU LOSE", "PRESS R TO TRY AGAIN");
 			if(timeSinceEnd < 5f) {
@@ -148,10 +157,11 @@ public class BikeGame2 extends ActorGame {
 				end();
 			}
 		}
-
+		
+		//if you win by reaching the finishline, timer for animations
 		if (hasHit) {
 			bike.setHandLocation();
-			finishLine.setFinishGraphics("flag.green.png");
+			finishLine.setFinishGraphics("flag.green.png",1f,1f);
 			endingMessage("YOU WIN", "THANK YOU FOR PLAYING");
 			if(timeSinceEnd < 3f) {
 				timeSinceEnd += deltaTime;
@@ -160,6 +170,7 @@ public class BikeGame2 extends ActorGame {
 			}
 		}
 
+		//gravity changes when the player enters the fields
 		if(contactListenerWell.hasContactWith(bike.getEntity())) {
 			setWellGravity(new Vector(0,4f));
 		} else if (contactListenerWell2.hasContactWith(bike.getEntity())) {
@@ -167,7 +178,8 @@ public class BikeGame2 extends ActorGame {
 		} else {
 			setWellGravity(new Vector(0,-9.81f));
 		}
-
+		
+		//if the player hits the checkpoint, changes the spawn location and the flag colour
 		if(checkPoint.gotHit()) {
 			checkPoint.setGotHit(true);
 			checkPoint.setTriggerGraphics("flag.green.png");
@@ -186,6 +198,7 @@ public class BikeGame2 extends ActorGame {
 		}
 	}
 
+	//method to quickly display messages on screen
 	public void endingMessage(String text1, String text2) {
 		message.setText(text1);
 		message2.setText(text2);
