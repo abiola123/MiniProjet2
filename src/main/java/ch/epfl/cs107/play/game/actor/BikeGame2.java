@@ -159,7 +159,7 @@ public class BikeGame2 extends ActorGame {
 		}
 		
 		//if you win by reaching the finishline, timer for animations
-		if (hasHit) {
+,		if (hasHit) {
 			bike.setHandLocation();
 			finishLine.setFinishGraphics("flag.green.png",1f,1f);
 			endingMessage("YOU WIN", "THANK YOU FOR PLAYING");
@@ -182,7 +182,7 @@ public class BikeGame2 extends ActorGame {
 		//if the player hits the checkpoint, changes the spawn location and the flag colour
 		if(checkPoint.gotHit()) {
 			checkPoint.setGotHit(true);
-			checkPoint.setTriggerGraphics("flag.green.png");
+			checkPoint.setTriggerGraphics("flag.green.png",1f,1f);
 			startingPosition = checkPointPosition;
 		}
 
