@@ -8,10 +8,12 @@ import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
+
+//creates a field of crates 
 public class CrateField extends GameEntity implements Actor {
 	private Crate crate1 ,crate2 ,crate3 ,crate4 ,crate5 ,crate6 ,crate7 ,crate8 ,crate9 ,crate10 ,crate11 ,crate12 ,crate13 ,crate14 ,crate15 ,crate16 ,crate17 ,crate18 ,crate19 ,crate20 ,crate21 ,crate22 ,crate23 ,crate24 ,crate25 ,crate26 ,crate27,
 	crate28 ,crate29 ,crate30 ,crate31 ,crate32 ,crate33 ,crate34 ,crate35 ,crate36 ,crate37 ,crate38 ,crate39 ,crate40 ,crate41 ,crate42 ,crate43 ,crate44 ,crate45 ,crate46 ,crate47 ,crate48 ,crate49 ,crate50 ;
-	
+
 
 
 
@@ -28,7 +30,7 @@ public class CrateField extends GameEntity implements Actor {
 
 
 		//the only solution was to create all the crates separately :(
-		
+
 		crate1 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate2 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");
 		crate3 = new Crate(game,false,position,1.5f,1.5f,"crate.3.png");

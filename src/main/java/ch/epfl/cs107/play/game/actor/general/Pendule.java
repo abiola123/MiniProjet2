@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.actor.ActorGame;
-import ch.epfl.cs107.play.game.actor.Crate;
 import ch.epfl.cs107.play.game.actor.GameEntity;
 import ch.epfl.cs107.play.game.actor.ShapeGraphics;
 import ch.epfl.cs107.play.math.Entity;
@@ -30,19 +29,20 @@ public class Pendule  extends GameEntity implements Actor  {
 		Vector ballPos = position.add(-50000f,-100000.f);
 
 		crate = new Crate(game,fixed,position,2f,2f,"metal.broken.hollow.1.png");
-		bodyBlock = crate.getEntity();
+		
+		bodyBlock = crate.returnEntity();
 		ball = new Ball(game,false,position,radius,innerColor,outerColor);
 		ball.attach(bodyBlock, 1f, 1f , penduleLength);
 		this.corde = corde;
 
-		PartBuilder partBuilder1 = corde.createPartBuilder();
-		Polyline polyline = new Polyline(
-
-				crate.getPosition(),
-				ball.getPosition()
-				);
-		cordeGraphics = new ShapeGraphics(polyline,Color.WHITE,Color.WHITE,.1f,1.f,0);
-		cordeGraphics.setParent(corde);
+//		PartBuilder partBuilder1 = corde.createPartBuilder();
+//		Polyline polyline = new Polyline(
+//
+//				crate.getPosition(),
+//				ball.getPosition()
+//				);
+//		cordeGraphics = new ShapeGraphics(polyline,Color.WHITE,Color.WHITE,.1f,1.f,0);
+//		cordeGraphics.setParent(corde);
 	}
 
 	public Pendule(ActorGame game, boolean fixed, Vector position, float radius, String graphics, float penduleLength ) {
@@ -52,18 +52,19 @@ public class Pendule  extends GameEntity implements Actor  {
 //		Vector ballPos = position.add(-50000f,-100000.f);
 
 		crate = new Crate(game,fixed,position,2f,2f,"metal.broken.hollow.1.png");
-		bodyBlock = crate.getEntity();
+		bodyBlock = crate.returnEntity();
 		ball = new Ball(game,false,position,radius,graphics);
 		ball.attach(bodyBlock, 1f, 1f , penduleLength);
-//		if(crate.getPosition()!= (ball.getPosition() )) {
-			PartBuilder partBuilder1 = corde.createPartBuilder();
-			Polyline polyline = new Polyline(
+////		if(crate.getPosition()!= (ball.getPosition() )) {
+//			PartBuilder partBuilder1 = corde.createPartBuilder();
+//			Polyline polyline = new Polyline(
 
-					crate.getPosition(),
-					crate.getPosition().add(0f,-penduleLength)
-					);
-			cordeGraphics = new ShapeGraphics(polyline,Color.WHITE,Color.WHITE,.1f,1.f,0);
-			cordeGraphics.setParent(corde);
+				System.out.println(	crate.getPosition());
+				System.out.println( 	ball.getPosition());
+				System.out.println(	ball.getPosition().add(new Vector(0.00001f,0f)));
+//					);
+//			cordeGraphics = new ShapeGraphics(polyline,Color.WHITE,Color.WHITE,.1f,1.f,0);
+//			cordeGraphics.setParent(corde);
 //		}else {
 //			System.out.println("fuck you");
 //			System.out.println(ball.getPosition());
@@ -72,7 +73,6 @@ public class Pendule  extends GameEntity implements Actor  {
 	}
 	@Override
 	public Transform getTransform() {
-		// TODO Auto-generated method stub
 		return ball.getTransform();
 	}
 
@@ -80,6 +80,6 @@ public class Pendule  extends GameEntity implements Actor  {
 	public void draw(Canvas canvas) {
 		ball.draw(canvas);
 		crate.draw(canvas);		
-		cordeGraphics.draw(canvas);
+//		cordeGraphics.draw(canvas);
 	}
 }

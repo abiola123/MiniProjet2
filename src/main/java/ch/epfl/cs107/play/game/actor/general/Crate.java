@@ -17,6 +17,7 @@ public class Crate extends GameEntity implements Actor {
 	private ImageGraphics blockGraphics;
 	private float blockWidth;
 	private float blockHeight;
+	private Vector position;
 
 
 	//----------------------------------------------------------------
@@ -25,6 +26,8 @@ public class Crate extends GameEntity implements Actor {
 	public Crate(ActorGame game, boolean fixed , Vector position , float blockWidth, float blockHeight, String graphics) {
 
 		super(game, fixed,position);
+		this.body = body;
+		this.position = position;
 		PartBuilder partBuilder = body.createPartBuilder();
 		Polygon polygon = new Polygon (
 				new Vector (0.0f, 0.0f),
@@ -68,14 +71,18 @@ public class Crate extends GameEntity implements Actor {
 
 	//---------------------------------------------------------------
 
-	public Entity getBody() {
+	@Override
+	public Vector getPosition() {
+		return position;
+	}
+	public Entity returnEntity() {
 		return body;
 	}
 
 
 	@Override
 	public Transform getTransform() {
-		return getTransform();
+		return null;
 	}
 	@Override
 	public Vector getVelocity() {

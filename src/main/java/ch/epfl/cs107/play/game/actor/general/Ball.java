@@ -42,6 +42,7 @@ public class Ball extends GameEntity implements Actor{
 		//		this.innerColor = innerColor;
 		//		this.radius = radius;
 		this.position = position;
+		this.ball = ball;
 		PartBuilder partBuilder = ball.createPartBuilder();
 		Circle circle = new Circle(radius);
 		partBuilder.setShape(circle);
@@ -113,5 +114,9 @@ public class Ball extends GameEntity implements Actor{
 		if(imageGraphics)
 			ballGraphics1.draw(canvas);
 
+	}
+	
+	public Entity returnEntity() {
+		return ball;
 	}
 }

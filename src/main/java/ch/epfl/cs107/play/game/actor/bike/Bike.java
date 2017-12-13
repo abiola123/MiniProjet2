@@ -36,7 +36,7 @@ public class Bike extends GameEntity implements Actor {
 	private Wheel rightWheel;
 	// plus propre, recevoir dans constructeur la direction
 	private Boolean directionR = true;
-	private Float MAX_WHEEL_SPEED = 15.0f;
+	private Float MAX_WHEEL_SPEED = 20.0f;
 	private Vector position;
 	private Vector getRightFootLocation;
 	private Vector getLeftFootLocation;

@@ -18,12 +18,9 @@ public class Trigger extends GameEntity implements Actor{
 	private Entity body = getEntity();
 	private ImageGraphics triggerGraphics;
 	private PartBuilder partBuilder;
-	private ActorGame game;
-	private Vector position;
 	private boolean gotHit;
-	private Contact contact;
 	private BasicContactListener contactListener;
-
+	//creates an entity that react to a conctact with the bike
 	public Trigger(ActorGame game, boolean fixed, Vector position, String graphics, float graphicsWidth, float graphicsHeight) {
 		super(game,fixed,position);
 
@@ -35,13 +32,15 @@ public class Trigger extends GameEntity implements Actor{
 		triggerGraphics = new ImageGraphics(graphics,graphicsWidth,graphicsHeight);
 		triggerGraphics.setParent(body);
 
+
+		//makes the trigger receptive to contact with other objects
 		contactListener = new BasicContactListener () ;
 		body.addContactListener(contactListener) ;
 
 
 	}
-	
 
+	//gives the posssibility to change the graphics of the trigger
 	public void setTriggerGraphics(String graphics) {
 		triggerGraphics = new ImageGraphics(graphics,1,1);
 		triggerGraphics.setParent(body);
@@ -58,8 +57,7 @@ public class Trigger extends GameEntity implements Actor{
 
 	@Override
 	public Transform getTransform() {
-		// TODO Auto-generated method stub
-		return null;
+		return getTransform();
 	}
 
 
@@ -68,16 +66,17 @@ public class Trigger extends GameEntity implements Actor{
 		triggerGraphics.draw(canvas);
 
 	}
-	
+	//checks if the trigger got hit, returns a boolean
 	public boolean gotHit() {
 
 		return gotHit;  
 	}
-	
+
+	//setter for gotHit, prevents an infinite loop of collectedKeys in bikeGame 
 	public void setGotHit(boolean gothit) {
 		gotHit = gothit;
 	}
-
+	//lets you destroy the trigger
 	public void destroy() {
 		body.destroy();
 	}

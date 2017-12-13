@@ -34,7 +34,7 @@ public abstract class ActorGame implements Game {
 	//camera attributs
 	private static final float VIEW_TARGET_VELOCITY_COMPENSATION = 0.2f ;
 	private static final float VIEW_INTERPOLATION_RATIO_PER_SECOND = 0.1f ;
-	private static final float VIEW_SCALE = 70.0f ;
+	private static final float VIEW_SCALE = 30.0f ;
 
 	//contains all the actors of the game
 	private ArrayList<Actor> operatingActor = new ArrayList<Actor>();

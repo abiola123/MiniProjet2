@@ -5,6 +5,7 @@ import java.awt.Color;
 import ch.epfl.cs107.play.game.actor.bike.Bike;
 import ch.epfl.cs107.play.game.actor.general.CrateField;
 import ch.epfl.cs107.play.game.actor.general.Finish;
+import ch.epfl.cs107.play.game.actor.general.GravityWell;
 import ch.epfl.cs107.play.game.actor.general.Pendule;
 import ch.epfl.cs107.play.game.actor.general.Plank;
 import ch.epfl.cs107.play.game.actor.general.Seasaw;
@@ -37,6 +38,7 @@ private boolean contactBikeFinish;
 private CrateField crateField;
 private TextGraphics message;
 private BasicContactListener contactListener;
+private BasicContactListener contactListenerWell;
 private Trigger key1;
 private Trigger key2;
 private Trigger key3;
@@ -47,6 +49,7 @@ private Trigger key7;
 private Trigger key8;
 private Trigger key9;
 private Trigger key10;
+private GravityWell gravityWell;
 private int collectedKeys = 0;
 
 //vecteur finish line a changer 
@@ -66,12 +69,13 @@ private Vector key2Position =  (new Vector(92.0f, -10.0f));
 private Vector key3Position =  (new Vector(200.0f, 0f));
 private Vector key4Position =  (new Vector(238f, 6.0f));
 private Vector key5Position =  (new Vector(250.0f, 0.0f));
-private Vector key6Position =  (new Vector(11.0f, 0.0f));
-private Vector key7Position =  (new Vector(10.0f, 0.0f));
+private Vector key6Position =  (new Vector(307.0f, -19.5f));
+private Vector key7Position =  (new Vector(345.0f, -11f));
 private Vector key8Position =  (new Vector(9.0f, 0.0f));
 private Vector key9Position =  (new Vector(8.0f, 0.0f));
 private Vector key10Position=  (new Vector(7.0f, 0.0f));
 private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
+private Vector gravityWellPosition = (new Vector(345f,-60f));
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);
 		this.window = window;
@@ -83,7 +87,7 @@ private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 		
 		
 		
-		setBikePosition(new Vector(4.0f,6.0f));
+		setBikePosition(new Vector(5f,0.0f));
 		terrain = new Terrain(this,true,terrainPosition);
 		key1 = new Trigger(this,true,key1Position,"key.yellow.png", 1, 1);
 		key2 = new Trigger(this,true,key2Position,"key.yellow.png", 1, 1);
@@ -101,15 +105,18 @@ private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 		bike = new Bike(this , false , bikePosition, 0.5f);
 		finishLine = new Finish(this,true,finishLinePosition,"door.closed.png",3f,3f);
 		finishLine2 = new Finish(this,true, new Vector(4f,0f),"flag.green.png",1f,1f);
-//		pendule = new Pendule(this,true,pendulePosition,1f,"saw.png.png",10.5f);
-//		pendule2 = new Pendule(this,true,pendule2Position,2.5f,Color.WHITE,Color.WHITE,14.5f);
+		pendule = new Pendule(this,true,pendulePosition,1f,"saw.png.png",10.5f);
+		pendule2 = new Pendule(this,true,pendule2Position,2.5f,Color.WHITE,Color.WHITE,14.5f);
 		crateField = new CrateField(this,true,crateFieldPosition);
 		seasaw = new Seasaw(this,true,seasawPosition,10.0f,1.0f,5.0f,0.1f,Color.WHITE, Color.WHITE);
-		
+		gravityWell = new GravityWell(this,true,gravityWellPosition,40f,1200f,Color.WHITE,Color.CYAN);
 		
 		contactListener = new BasicContactListener();
 		finishLine.addContactListener(contactListener);
 		
+		
+		contactListenerWell = new BasicContactListener();
+		gravityWell.addContactListener(contactListenerWell);
 		
 		actorListAddActor((Actor)terrain);
 		actorListAddActor((Actor)firstCrate);
@@ -119,8 +126,8 @@ private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 		actorListAddActor((Actor)finishLine);
 		actorListAddActor((Actor)finishLine2);
 		actorListAddActor((Actor)seasaw);
-//		actorListAddActor((Actor)pendule);
-//		actorListAddActor((Actor)pendule2);
+		actorListAddActor((Actor)pendule);
+		actorListAddActor((Actor)pendule2);
 		actorListAddActor((Actor)crateField);
 		actorListAddActor((Actor)key1);
 		actorListAddActor((Actor)key2);
@@ -132,7 +139,7 @@ private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 		actorListAddActor((Actor)key8);
 		actorListAddActor((Actor)key9);
 		actorListAddActor((Actor)key10);
-	
+		actorListAddActor((Actor)gravityWell);
 		
 		
 		this.setViewCandidate(bike);
@@ -155,6 +162,15 @@ private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 			finishLine.setFinishGraphics("door.open.png");
 		}
 		
+		
+		//--------------ContactListeners----------------------
+		if(contactListenerWell.hasContactWith(bike.getEntity())) 
+			bike.getEntity().applyForce(new Vector(0f,4f), new Vector(395f,33f));
+//			setWellGravity(new Vector(0,4f));
+//		}else {
+//			setWellGravity(new Vector(0,-9.81f));
+//		}
+//		
 		
 		//----------------KEYS---------------------------------
 		

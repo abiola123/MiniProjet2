@@ -279,6 +279,19 @@ public class Terrain extends GameEntity implements Actor {
 			line8Graphics = new ShapeGraphics(polyline8,null,Color.WHITE,.1f,1.f,0);
 			line8Graphics.setParent(line8);
 			
+			
+			PartBuilder partBuilder12 = poly9.createPartBuilder();
+			Polyline polyline9 = new Polyline (
+					395f,30f,
+					400f,30f,
+					460f,30f
+		
+					);
+			
+			
+			createPolyline(polyline9,line9,1.0f,partBuilder12 );
+			line9Graphics = new ShapeGraphics(polyline9,null,Color.WHITE,.1f,1.f,0);
+			line9Graphics.setParent(line9);
 //			
 //		}
 //		
@@ -298,10 +311,8 @@ public class Terrain extends GameEntity implements Actor {
 			partBuilder.setShape(polyline);
 			partBuilder.setFriction(friction);
 			partBuilder.build();
-			
-
-			
 		}
+		
 	//---------------------------------------------------------------------------
 		
 		// les returns sont correctes ???
@@ -311,7 +322,7 @@ public class Terrain extends GameEntity implements Actor {
 			return getTransform();
 		}
 		
-		//------------------------------------------------------------------
+	//------------------------------------------------------------------
 
 		@Override
 		public void draw(Canvas canvas) {
@@ -323,6 +334,7 @@ public class Terrain extends GameEntity implements Actor {
 		line6Graphics.draw(canvas);
 		line7Graphics.draw(canvas);
 		line8Graphics.draw(canvas);
+		line9Graphics.draw(canvas);
 	    polygon1Graphics.draw(canvas);
 	    polygon2Graphics.draw(canvas);
 	    polygon3Graphics.draw(canvas);

@@ -16,50 +16,48 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
 public class Finish extends Trigger {
-private Entity body = getEntity();
-private Entity body2 = getEntity();
-private ImageGraphics flagGraphics;
-private ImageGraphics finishGraphics;
-private PartBuilder partBuilder;
-private PartBuilder partBuilder2;
-private ActorGame game;
-private String graphics = "flag.red.png";
-private Vector position;
-private Contact contact;
-private boolean gotHit;
+	private Entity body = getEntity();
+	private Entity body2 = getEntity();
+	private ImageGraphics flagGraphics;
+	private ImageGraphics finishGraphics;
+	private PartBuilder partBuilder;
+	private PartBuilder partBuilder2;
+	private ActorGame game;
+	private String graphics = "flag.red.png";
+	private Vector position;
+	private Contact contact;
+	private boolean gotHit;
 
-//test
-private BasicContactListener contactListener ;
+	//creates a circle shaped trigger that reacts when the player hits it
+	//private BasicContactListener contactListener ;
 
 
 	public Finish(ActorGame game, boolean fixed , Vector position , String graphics , float graphicsWidth, float graphicsHeight) {
 		super(game,fixed,position,graphics,graphicsWidth,graphicsHeight);
 		partBuilder = body.createPartBuilder();
-		//we do not need a modifiable radius for the cirlce beacause we do not want to modify it later ?
 		Circle circle = new Circle (1f);
 		partBuilder.setShape(circle);
 		partBuilder.setGhost(true);
 		partBuilder.build();
 		finishGraphics = new ImageGraphics(graphics,graphicsWidth,graphicsHeight);
 		finishGraphics.setParent(body);
-		
-		contactListener = new BasicContactListener () ;
-		body.addContactListener(contactListener) ;
-		
-		
+
+		//		contactListener = new BasicContactListener () ;
+		//		body.addContactListener(contactListener) ;
+		//		
+
 
 	}
-	
+
 	public void setFinishGraphics(String graphics) {
 		finishGraphics = new ImageGraphics(graphics,1,1);
 		finishGraphics.setParent(body);
 	}
+
+	//	public boolean contact(Entity entity) {
+	//		return contactListener.hasContactWith(entity);
+	//	}
 	
-	public boolean contact(Entity entity) {
-		return contactListener.hasContactWith(entity);
-	}
-
-
 	@Override
 	public Transform getTransform() {
 		// TODO Auto-generated method stub
@@ -69,17 +67,9 @@ private BasicContactListener contactListener ;
 	@Override
 	public void draw(Canvas canvas) {
 		finishGraphics.draw(canvas);
-
-		
 	}
-	
-//	public void update(float deltaTime) {
-//		int numberOfCollisions = contactListener. getEntities ().size() ;
-//		if (contact(Entity entity)){
-//		setFinishGraphics("flag.green.png") ;
-//		}
 
-	
+
 }
 
 
