@@ -26,6 +26,10 @@ public class GravityWell extends GameEntity implements Actor{
 	public GravityWell(ActorGame game, boolean fixed, Vector position, float width, float height, Color fillColor, Color outlineColor) {
 
 		super(game,fixed,position);
+		
+		if(width <= 0 || height <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
 
 		PartBuilder partBuilder = poly.createPartBuilder();
 		Polygon polygon = new Polygon (

@@ -26,17 +26,15 @@ import ch.epfl.cs107.play.math.Shape;
 import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
-
+//creates a new bike for the game
 public class Bike extends GameEntity implements Actor {
 
 	private Entity body = getEntity();
 	private Polyline arm, back, rightTLeg, leftTLeg, leftBLeg, rightBLeg;
 	private ShapeGraphics headGraphics;
 	private ShapeGraphics shapeGraphics;
-	private TextGraphics message;
 	private Wheel leftWheel;
 	private Wheel rightWheel;
-	// plus propre, recevoir dans constructeur la direction
 	private Boolean directionR = true;
 	private Float MAX_WHEEL_SPEED = 15.0f;
 	private Vector position;
@@ -45,15 +43,11 @@ public class Bike extends GameEntity implements Actor {
 	private Vector rightKneeLocation;
 	private Vector leftKneeLocation;
 	private Vector handLocation = new Vector(0.5f,1.0f);
-
-
-	//	private ContactListener listener;
 	private boolean gotHit;
 	private boolean wasHit;
-
 	float timeSinceCollision = 0;
 
-
+	//
 	ContactListener listener = new ContactListener () {
 		@Override
 		public void beginContact(Contact contact) {
@@ -78,7 +72,13 @@ public class Bike extends GameEntity implements Actor {
 
 
 	public Bike(ActorGame game, boolean fixed , Vector position, Float radius) {
+		
 		super(game, fixed,position);
+		
+		if(radius <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
+		
 		this.position = position;
 		PartBuilder partBuilder = body.createPartBuilder();
 		Polygon polygon = new Polygon (

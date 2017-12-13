@@ -26,6 +26,11 @@ public class Crate extends GameEntity implements Actor {
 	public Crate(ActorGame game, boolean fixed , Vector position , float blockWidth, float blockHeight, String graphics) {
 
 		super(game, fixed,position);
+		
+		if(blockHeight <= 0 || blockWidth <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
+		
 		this.body = body;
 		this.position = position;
 		PartBuilder partBuilder = body.createPartBuilder();

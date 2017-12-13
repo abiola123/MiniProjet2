@@ -49,7 +49,7 @@ public boolean begin(Window window, FileSystem filesSystem) {
 	partBuilder.build () ;
 	 
 	
- 	block = new ImageGraphics("box.5.png" , 1 , 1);
+ 	block = new ImageGraphics("box.4.png" , 1 , 1);
    	block.setParent(body);
    	block.setAlpha(1.0f);
    	block.setDepth(0.0f);
@@ -63,7 +63,7 @@ public boolean begin(Window window, FileSystem filesSystem) {
 	partBuilder2.setShape(polygon);
 	partBuilder2.build();
    	
-	crate = new ImageGraphics("box.5.png" , 1 , 1);
+	crate = new ImageGraphics("box.4.png" , 1 , 1);
    	crate.setParent(body2);
    	crate.setAlpha(1.0f);
    	crate.setDepth(0.0f);

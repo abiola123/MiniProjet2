@@ -35,11 +35,11 @@ public abstract class ActorGame implements Game {
 	//camera attributs
 	private static final float VIEW_TARGET_VELOCITY_COMPENSATION = 0.2f ;
 	private static final float VIEW_INTERPOLATION_RATIO_PER_SECOND = 0.1f ;
-	private static final float VIEW_SCALE = 30.0f ;
+	private static final float VIEW_SCALE = 20.0f ;
 
 	//contains all the actors of the game
 	private ArrayList<Actor> operatingActor = new ArrayList<Actor>();
-
+	private ArrayList<Trigger> trigger = new ArrayList<Trigger>();
 
 
 	public Keyboard getKeyboard(){
@@ -62,8 +62,9 @@ public abstract class ActorGame implements Game {
 
 
 	//select the the line that you want to remove from your actorArray
-	public void actorListRemoveActor(int indexOfLine) {
-		getOperatingActor().remove(indexOfLine);
+	//public void actorListRemoveActor(int indexOfLine) {
+	public void actorListRemoveActor(Actor actor) {
+		getOperatingActor().remove(actor);
 	}
 
 	//-------------------------------------------------------------
@@ -81,19 +82,17 @@ public abstract class ActorGame implements Game {
 
 	//-------------------------------------------------------------
 
-
-
 	//ends game, destroys all the actors and removes them from the operatingActorList
 	public void end() {
-		for(int i = 0; i <operatingActor.size(); i++ ) {
+		for(int i = 0; i < operatingActor.size(); i++) {
 			operatingActor.get(i).destroy();
 		}
-		for(int i=1; i<operatingActor.size();i++) {
-			if(!(operatingActor.get(i) instanceof Trigger)) {
-				operatingActor.remove(i);
-			}
-		}
 		getOperatingActor().clear();
+		
+		
+		
+		
+		
 	}
 
 	//-------------------------------------------------------------

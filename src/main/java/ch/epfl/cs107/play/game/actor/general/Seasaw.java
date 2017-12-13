@@ -38,6 +38,11 @@ private Color plankOuterColor;
 		this.plankGraphics = plankGraphics;
 		this.plankOuterColor = plankOuterColor;
 		this.plankInnerColor = plankInnerColor;
+		
+		if(blockWidth <= 0 || blockHeight <= 0 || plankWidth <= 0 || plankHeight <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
+		
 		PartBuilder partBuilder = body.createPartBuilder();
 		Polygon polygon = new Polygon (
 				new Vector (0.0f, 0.0f),

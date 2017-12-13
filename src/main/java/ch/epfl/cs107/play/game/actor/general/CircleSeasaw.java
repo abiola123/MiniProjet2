@@ -31,9 +31,9 @@ private Entity circle = getEntity();
 	public CircleSeasaw(ActorGame game, boolean fixed , Vector position,boolean invisible, float radius) {
 		super(game,fixed,position);
 		
-		
-		
-		
+		if(radius <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
 		
 		PartBuilder partBuilder1 = circle.createPartBuilder();
 		Circle circle1 = new Circle(radius);

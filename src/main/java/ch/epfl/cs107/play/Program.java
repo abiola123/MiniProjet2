@@ -2,6 +2,7 @@ package ch.epfl.cs107.play;
 
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.game.actor.BikeGame;
+import ch.epfl.cs107.play.game.actor.BikeGame2;
 import ch.epfl.cs107.play.game.actor.CrateGame;
 import ch.epfl.cs107.play.game.tutorial.ContactGame;
 import ch.epfl.cs107.play.game.tutorial.HelloWorldGame;

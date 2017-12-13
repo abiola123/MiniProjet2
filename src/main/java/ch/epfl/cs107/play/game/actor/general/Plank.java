@@ -38,6 +38,10 @@ public class Plank extends GameEntity implements Actor {
 		this.plankHeight = plankHeight;
 		this.innerColor = innerColor;
 		this.outerColor = outerColor;
+		
+		if(plankWidth <= 0 || plankHeight <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
 
 		PartBuilder partBuilder = plank.createPartBuilder();
 		polygon = new Polygon(

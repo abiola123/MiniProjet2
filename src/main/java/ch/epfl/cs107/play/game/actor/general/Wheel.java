@@ -33,6 +33,11 @@ public class Wheel extends GameEntity implements Actor {
 	public Wheel(ActorGame game, boolean fixed, Vector position, float radius) {
 		super(game, fixed, position);
 		this.game = game;
+		
+		if(radius <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
+		
 		partBuilder = body.createPartBuilder();
 		Circle circle = new Circle (radius);
 		partBuilder.setShape(circle);

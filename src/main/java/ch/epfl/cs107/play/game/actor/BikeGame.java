@@ -3,6 +3,7 @@ package ch.epfl.cs107.play.game.actor;
 import java.awt.Color;
 
 import ch.epfl.cs107.play.game.actor.bike.Bike;
+import ch.epfl.cs107.play.game.actor.general.Arrow;
 import ch.epfl.cs107.play.game.actor.general.CrateField;
 import ch.epfl.cs107.play.game.actor.general.Finish;
 import ch.epfl.cs107.play.game.actor.general.GravityWell;
@@ -54,8 +55,10 @@ public class BikeGame extends ActorGame{
 	private Trigger key10;
 	private Trigger checkPoint1;
 	private Trigger checkPoint2;
+	private Arrow arrow;
+	private Arrow arrow2;
+	private Arrow arrow3;
 	private GravityWell gravityWell;
-//	private int collectedKeys = 0;
 	private TextGraphics keysCounter;
 	private float timeSinceStart = 0;
 	private float timeSinceEnd = 0;
@@ -64,7 +67,7 @@ public class BikeGame extends ActorGame{
 
 	//vecteur finish line a changer 
 	private Vector startingPosition = (new Vector(5f,1.0f));
-	private Vector finishLinePosition = new Vector(345.0f, -11f);
+	private Vector finishLinePosition = new Vector(420.0f, 30f);
 	private Vector terrainPosition = new Vector(0.0f,0.0f);
 	private Vector v1 = (new Vector(0.0f, 5.0f));
 	private Vector v2 = (new Vector(0.2f, 7.0f));
@@ -83,13 +86,13 @@ public class BikeGame extends ActorGame{
 	private Vector key5Position =  (new Vector(250.0f, 0.0f));
 	private Vector key6Position =  (new Vector(307.0f, -19.5f));
 	private Vector key7Position =  (new Vector(345.0f, -11f));
-	private Vector key8Position =  (new Vector(9.0f, 0.0f));
+	private Vector key8Position =  (new Vector(430f, 30.0f));
 	private Vector key9Position =  (new Vector(8.0f, 0.0f));
-	private Vector key10Position=  (new Vector(7.0f, 0.0f));
+	private Vector key10Position=  (new Vector(490.0f, 35.0f));
 	private Vector keysCounterPosition = (new Vector(-8.5f, -23.5f));
 	private Vector gravityWellPosition = (new Vector(345f,-60f));
 	private boolean hasHit = false;
-
+	private int keysAtCheckPoint;
 
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);
@@ -100,7 +103,7 @@ public class BikeGame extends ActorGame{
 		keysCounter = new TextGraphics("",0.05f,Color.YELLOW,Color.GRAY,0.01f,false,false,keysCounterPosition,0.8f,2.0f);
 
 		setBikePosition(startingPosition);
-		terrain = new Terrain(null,true,terrainPosition);
+		terrain = new Terrain(this,true,terrainPosition);
 		key1 = new Trigger(this,true,key1Position,"key.yellow.png", 1, 1);
 		key2 = new Trigger(this,true,key2Position,"key.yellow.png", 1, 1);
 		key3 = new Trigger(this,true,key3Position,"key.yellow.png", 1, 1);
@@ -117,13 +120,16 @@ public class BikeGame extends ActorGame{
 		bike = new Bike(this , false , bikePosition, 0.5f);
 		finishLine = new Finish(this,true,finishLinePosition,"door.closed.png",3f,3f);
 		finishLine2 = new Finish(this,true, new Vector(4f,0f),"flag.green.png",1f,1f);
-		pendule = new Pendule(this,true,pendulePosition,1f,"saw.png.png",10.5f);
+		pendule = new Pendule(this,true,pendulePosition,1f,"saw.png",15.f);
 		pendule2 = new Pendule(this,true,pendule2Position,2.5f,Color.WHITE,Color.WHITE,14.5f);
 		crateField = new CrateField(this,true,crateFieldPosition);
 		seasaw = new Seasaw(this,true,seasawPosition,10.0f,1.0f,5.0f,0.1f,Color.WHITE, Color.WHITE);
 		gravityWell = new GravityWell(this,true,gravityWellPosition,40f,120f,Color.WHITE,Color.CYAN);
 		checkPoint1 = new Trigger(this,true,checkPointPosition,"flag.red.png",1f,1f);
-		//		checkPoint2 = new Trigger
+		arrow = new Arrow(this, true, new Vector(355,-5), "arrow.white.png", 1f,1f);
+		arrow2 = new Arrow(this, true, new Vector(365,10), "arrow.white.png", 1f,1f);
+		arrow3 = new Arrow(this, true, new Vector(375,20), "arrow.white.png", 1f,1f);
+		
 		contactListener = new BasicContactListener();
 		finishLine.addContactListener(contactListener);
 
@@ -138,6 +144,21 @@ public class BikeGame extends ActorGame{
 		message_down.setText("");
 		message_down.setParent(getCanvas());
 		message_down.draw(getCanvas());
+
+		if(startingPosition == checkPointPosition) {
+			while(collectedKeys.size()> keysAtCheckPoint) {
+				collectedKeys.remove(1);
+			}
+			while(collectedKeys.size()<keysAtCheckPoint) {
+				collectedKeys.add(1);
+			}
+		} else {
+			if(collectedKeys.size()>1) {
+				collectedKeys.clear();
+			}
+
+
+		}
 
 		//--------------CONTACT LISTENERS------------------------------
 
@@ -169,6 +190,9 @@ public class BikeGame extends ActorGame{
 		actorListAddActor((Actor)key10);
 		actorListAddActor((Actor)checkPoint1);
 		actorListAddActor((Actor)gravityWell);
+		actorListAddActor((Actor)arrow);
+		actorListAddActor((Actor)arrow2);
+		actorListAddActor((Actor)arrow3);
 
 
 		this.setViewCandidate(bike);
@@ -184,7 +208,7 @@ public class BikeGame extends ActorGame{
 		setViewCandidate(bike);
 		super.update(deltaTime);
 
-		
+
 		setHit();
 
 		// delayer
@@ -208,19 +232,19 @@ public class BikeGame extends ActorGame{
 			}
 		}
 		if (hasHit && collectedKeys.size() >= 10) {
-//		if (hasHit && collectedKeys >= 10) {
 			bike.setHandLocation();
-			finishLine.setFinishGraphics("flag.green.png");
-			endingMessage("YOU WIN", "PRESS R TO TRY AGAIN");
+			finishLine.setFinishGraphics("flag.green.png",1f,1f);
+			endingMessage("YOU WIN", "THANK YOU FOR PLAYING");
 			if(timeSinceEnd < 5f) {
 				timeSinceEnd += deltaTime;
 			} else {
 				end();
 			}
+
 		} else if (hasHit && collectedKeys.size() < 10) {
-//		} else if (hasHit && collectedKeys < 10) {
+			//		} else if (hasHit && collectedKeys < 10) {
 			endingMessage("OH NO", "You didn't collect all 10 keys");
-			if(timeSinceEnd < 3f) {
+			if(timeSinceEnd < 4f) {
 				timeSinceEnd += deltaTime;
 			} else {
 				hasHit = false;
@@ -230,8 +254,7 @@ public class BikeGame extends ActorGame{
 
 
 		if(collectedKeys.size()==10) {
-//		if(collectedKeys==10) {
-			finishLine.setFinishGraphics("door.open.png");
+			finishLine.setFinishGraphics("door.open.png",3f,3f);
 		}
 
 
@@ -239,8 +262,6 @@ public class BikeGame extends ActorGame{
 		//--------------ContactListeners----------------------
 
 		if(contactListenerWell.hasContactWith(bike.getEntity())) {
-			//			bike.getEntity().applyForce(new Vector(362.5f,11f), new Vector(362.5f,-0f));
-
 			setWellGravity(new Vector(0,4f));
 		}else {
 			setWellGravity(new Vector(0,-9.81f));
@@ -253,7 +274,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key1);
 			key1.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key1.setGotHit(false);
 
 		}
@@ -262,7 +283,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key2);
 			key2.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key2.setGotHit(false);
 
 		}
@@ -271,7 +292,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key3);
 			key3.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key3.setGotHit(false);
 
 		}
@@ -280,7 +301,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key4);
 			key4.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key4.setGotHit(false);
 
 		}
@@ -289,7 +310,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key5);
 			key5.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key5.setGotHit(false);
 		}
 
@@ -297,7 +318,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key6);
 			key6.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key6.setGotHit(false);
 		}
 
@@ -305,7 +326,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key7);
 			key7.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key7.setGotHit(false);
 
 		}
@@ -314,7 +335,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key8);
 			key8.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key8.setGotHit(false);
 		}
 
@@ -322,7 +343,7 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key9);
 			key9.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key9.setGotHit(false);
 		}
 
@@ -330,17 +351,17 @@ public class BikeGame extends ActorGame{
 			this.getOperatingActor().remove(key10);
 			key10.destroy();
 			addKeyToList();
-//			collectedKeys++;
+			//			collectedKeys++;
 			key10.setGotHit(false);
 		}
-		
-		 while(collectedKeys.size()>10) {
+
+		while(collectedKeys.size()>10) {
 			collectedKeys.remove(1);
-			
-//		if(collectedKeys >10) {
-//			collectedKeys = 10;
+
+			//		if(collectedKeys >10) {
+			//			collectedKeys = 10;
 		}
-		keysCounter.setText(collectedKeys.size() + "/10");
+		keysCounter.setText((collectedKeys.size() + "/10"));
 		keysCounter.setParent(getCanvas());
 		keysCounter.draw(getCanvas());
 
@@ -350,12 +371,15 @@ public class BikeGame extends ActorGame{
 		if(checkPoint1.gotHit()) {
 			checkPoint1.setGotHit(true);
 			checkPoint1.setTriggerGraphics("flag.green.png");
+			setKeyNumber(collectedKeys.size());
 			startingPosition = checkPointPosition;
 		}
 
 	}
-	
-	
+	public void setKeyNumber(int number) {
+		keysAtCheckPoint = number;
+	}
+
 	public void addKeyToList() {
 		collectedKeys.add(1);
 	}

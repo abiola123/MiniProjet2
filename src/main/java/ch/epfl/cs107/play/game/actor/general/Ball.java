@@ -37,6 +37,11 @@ public class Ball extends GameEntity implements Actor{
 	//creates an entity that is attached to the "pendule"
 	public Ball(ActorGame game,boolean fixed, Vector position, float radius, Color innerColor, Color outerColor) {
 		super(game,fixed,position);
+		
+		if(radius <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
+		
 		this.game = game;
 		//		this.outerColor = outerColor;
 		//		this.innerColor = innerColor;
@@ -69,12 +74,18 @@ public class Ball extends GameEntity implements Actor{
 		this.game = game;
 		this.radius = radius;
 		this.position = position;
+		
+		if(radius <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
+		
 		PartBuilder partBuilder = ball.createPartBuilder();
 		Circle circle = new Circle(radius);
 		partBuilder.setShape(circle);
 		partBuilder.build();
+		
 
-		ballGraphics1 = new ImageGraphics(graphics,radius*2,radius*2 );
+		ballGraphics1 = new ImageGraphics(graphics,radius*8,radius*8 );
 		ballGraphics1.setParent(ball);
 
 		//boolean used to draw the correct graphics

@@ -26,6 +26,11 @@ public class Pendule  extends GameEntity implements Actor  {
 		super(game,fixed,position);
 		this.position = position;
 
+		if(radius <= 0 || penduleLength <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
+		
+		
 		Vector ballPos = position.add(-50000f,-100000.f);
 
 		crate = new Crate(game,fixed,position,2f,2f,"metal.broken.hollow.1.png");
@@ -48,6 +53,10 @@ public class Pendule  extends GameEntity implements Actor  {
 	public Pendule(ActorGame game, boolean fixed, Vector position, float radius, String graphics, float penduleLength ) {
 		super(game,fixed,position);
 		this.position = position;
+		
+		if(radius <= 0 || penduleLength <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
 
 //		Vector ballPos = position.add(-50000f,-100000.f);
 
@@ -59,9 +68,9 @@ public class Pendule  extends GameEntity implements Actor  {
 //			PartBuilder partBuilder1 = corde.createPartBuilder();
 //			Polyline polyline = new Polyline(
 
-				System.out.println(	crate.getPosition());
-				System.out.println( 	ball.getPosition());
-				System.out.println(	ball.getPosition().add(new Vector(0.00001f,0f)));
+//				System.out.println(	crate.getPosition());
+//				System.out.println( 	ball.getPosition());
+//				System.out.println(	ball.getPosition().add(new Vector(0.00001f,0f)));
 //					);
 //			cordeGraphics = new ShapeGraphics(polyline,Color.WHITE,Color.WHITE,.1f,1.f,0);
 //			cordeGraphics.setParent(corde);

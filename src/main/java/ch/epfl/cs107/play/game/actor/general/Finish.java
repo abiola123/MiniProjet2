@@ -34,6 +34,12 @@ public class Finish extends Trigger {
 
 	public Finish(ActorGame game, boolean fixed , Vector position , String graphics , float graphicsWidth, float graphicsHeight) {
 		super(game,fixed,position,graphics,graphicsWidth,graphicsHeight);
+		
+		if(graphicsWidth <= 0 || graphicsHeight <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
+		
+		
 		partBuilder = body.createPartBuilder();
 		Circle circle = new Circle (1f);
 		partBuilder.setShape(circle);
@@ -49,8 +55,8 @@ public class Finish extends Trigger {
 
 	}
 
-	public void setFinishGraphics(String graphics) {
-		finishGraphics = new ImageGraphics(graphics,1,1);
+	public void setFinishGraphics(String graphics,float width, float length) {
+		finishGraphics = new ImageGraphics(graphics,width,length);
 		finishGraphics.setParent(body);
 	}
 

@@ -23,6 +23,10 @@ public class Trigger extends GameEntity implements Actor{
 	//creates an entity that react to a conctact with the bike
 	public Trigger(ActorGame game, boolean fixed, Vector position, String graphics, float graphicsWidth, float graphicsHeight) {
 		super(game,fixed,position);
+		
+		if(graphicsWidth <= 0 || graphicsHeight <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
 
 		partBuilder = body.createPartBuilder();
 		Circle circle = new Circle(1.5f);

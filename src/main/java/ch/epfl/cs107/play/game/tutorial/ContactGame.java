@@ -28,14 +28,11 @@ public class ContactGame implements Game {
 	private float blockHeight;
 	private BasicContactListener contactListener;
 
-
-
 	public boolean begin(Window window, FileSystem fileSystem) {
 		this.window = window;
 		world = new World();
 		world.setGravity(new Vector(0.0f, -9.81f));
-		
-		
+			
 	
 //1.---------------------------------------------------------------
 
@@ -55,7 +52,6 @@ public class ContactGame implements Game {
 			 );
 	partBuilder1.setShape(polygon1);
 	partBuilder1.build();
-	//Question mark, do i have to change the dimensions of the imagegraphics ?
 	blockGraphics = new ImageGraphics("stone.broken.4.png" , 10 ,1 );
 	blockGraphics.setParent(block);
 	blockGraphics.setAlpha(1.0f);

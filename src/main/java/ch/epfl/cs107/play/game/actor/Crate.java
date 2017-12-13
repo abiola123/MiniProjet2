@@ -13,10 +13,13 @@ public class Crate extends GameEntity implements Actor {
 	private ImageGraphics blockGraphics;
 
 
-
 	public Crate(ActorGame game, boolean fixed, Vector position , float blockWidth, float blockHeight, String graphics) {
 
 		super(game, fixed,position);
+		
+		if(position == null || blockWidth <= 0 || blockHeight <= 0) {
+			throw new IllegalArgumentException("Parametre invalide");
+		}
 
 		//creates body
 		PartBuilder partBuilder = body.createPartBuilder();

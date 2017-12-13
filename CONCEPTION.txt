@@ -1,0 +1,27 @@
+------------------------------------------------------------CONCEPTION---------------------------------------------------------
+
+No modification was made to the original architecture.
+Added extensions : visual animations : arms up when the cyclist reaches the finish line and cycling-feet animations ; slippery terrain ; 
+
+gravity wells ; seesaws ; pendulums ;  2 levels ( but without transition) ; triggers ; finish ; checkpoints ; “boost” key on the bike which promptly accelerates the bike.
+
+
+Added components :
+-	Boost  : when “B” key on keyboard is pressed the bike accelerates promptly .This function is needed for some parts of the game 
+-	Trigger : we added a class called trigger with all the elements that can interact with the bike (keys to open the door to unlock next level, finishline
+	and checkPoints that let you respawn at certain points)
+
+-	Gravity Field : in both of our levels, we added gravity fields that switch the gravity temporarily
+	and let us hover upstairs or downstairs
+
+-	Pendulum : we created two kinds of pendulums : the first must be avoided by the bike because otherwise it will destroy it,  
+	the other one acts like a platform and let’s you go from one point to another. Both are implemented in the first level of the game
+
+-	Seesaw :  two consecutive seesaws are implemented in the end of the second level
+
+-	Slippery terrain :  in the middle of the first level a slippery “slope” got added ,you will have to use the boost to get over
+	 this polyline with very low friction
+
+-	Animations of biker : two animations have been added to the biker: the fact that he raises his hands when he touches the finishline and the "cycling" with 
+	his legs
+
