@@ -36,6 +36,7 @@ public class Bike extends GameEntity implements Actor {
 	private Wheel leftWheel;
 	private Wheel rightWheel;
 	private Boolean directionR = true;
+	//sets the maximum wheel speed
 	private Float MAX_WHEEL_SPEED = 15.0f;
 	private Vector position;
 	private Vector rightFootLocation;
@@ -47,7 +48,7 @@ public class Bike extends GameEntity implements Actor {
 	private boolean wasHit;
 	float timeSinceCollision = 0;
 
-	//
+	//creates a contact listener for the bike, the main body frame doesn't react to ghost elements, or the wheels
 	ContactListener listener = new ContactListener () {
 		@Override
 		public void beginContact(Contact contact) {
@@ -66,10 +67,7 @@ public class Bike extends GameEntity implements Actor {
 		public void endContact(Contact contact) {}
 
 	};
-
-
-
-
+	
 
 	public Bike(ActorGame game, boolean fixed , Vector position, Float radius) {
 		
@@ -79,6 +77,7 @@ public class Bike extends GameEntity implements Actor {
 			throw new IllegalArgumentException("Parametre invalide");
 		}
 		
+		//creates the "invisible" body
 		this.position = position;
 		PartBuilder partBuilder = body.createPartBuilder();
 		Polygon polygon = new Polygon (
@@ -105,7 +104,7 @@ public class Bike extends GameEntity implements Actor {
 		leftWheel.attach(body, new Vector (-1.0f, 0.0f), new Vector(-0.5f,-1.0f), false);
 		rightWheel.attach(body, new Vector (1.0f, 0.0f), new Vector(0.5f,-1.0f) , false);
 
-
+		//starting to create shapes to draw our character
 		Circle head = new Circle(0.2f, getHeadLocation());
 		headGraphics = new ShapeGraphics(head,Color.WHITE,Color.WHITE,.1f,1.f,0);
 		headGraphics.setParent(body);
@@ -134,15 +133,17 @@ public class Bike extends GameEntity implements Actor {
 		return new Vector(0.0f, 1.75f);
 	}
 
-
+	//Draws the full bike (character and wheels)
 	@Override
 	public void draw(Canvas canvas) {
 		headGraphics.draw(canvas);
 		rightWheel.draw(canvas);
 		leftWheel.draw(canvas);
-
+		
+		//animates the legs
 		animate();
-
+		
+		//if the character is going right
 		if(directionR) {
 			drawChar(arm, getShoulderLocation(), handLocation, canvas);
 			drawChar(back, getShoulderLocation(), getBodyCentreLocation(), canvas);
@@ -150,7 +151,8 @@ public class Bike extends GameEntity implements Actor {
 			drawChar(rightTLeg, getBodyCentreLocation(), rightKneeLocation, canvas);
 			drawChar(leftBLeg, leftKneeLocation, leftFootLocation, canvas);
 			drawChar(rightBLeg, rightKneeLocation, rightFootLocation, canvas);
-
+		
+		//if the character is going left, draws him inverted
 		} else if (!directionR) {
 			drawChar(arm, getShoulderLocation().mul(-1, 1), handLocation.mul(-1,1), canvas);
 			drawChar(back, getShoulderLocation().mul(-1, 1), getBodyCentreLocation().mul(-1, 1), canvas);
@@ -160,7 +162,8 @@ public class Bike extends GameEntity implements Actor {
 			drawChar(rightBLeg, rightKneeLocation.mul(-1, 1), rightFootLocation.mul(-1, 1), canvas);
 		}
 	}
-
+	
+	//allows us to draw our character's body parts quicker
 	void drawChar(Shape shape, Vector location1, Vector location2, Canvas canvas) {
 		shape = new Polyline(location1, location2);
 		shapeGraphics = new ShapeGraphics(shape, null, Color.WHITE,.1f,1.f,0);
@@ -168,10 +171,12 @@ public class Bike extends GameEntity implements Actor {
 		shapeGraphics.draw(canvas);
 	}
 
+	//animates our character's legs
 	public void animate() {
 
 		float wheelSpeed = 0;
-
+		
+		//the legs will move according to the motor wheel
 		if(directionR) {
 			wheelSpeed = getWheelAngle(leftWheel);
 		}
@@ -179,7 +184,8 @@ public class Bike extends GameEntity implements Actor {
 		if(!directionR) {
 			wheelSpeed = -getWheelAngle(rightWheel);
 		}
-
+		
+		//maths
 		rightFootLocation = new Vector(0f,0.1f).add((float)(0.2*Math.cos(wheelSpeed)),(float)(0.2*Math.sin(wheelSpeed)));
 		leftFootLocation = new Vector(0f, 0.1f).add(-(float)(0.2*Math.cos(wheelSpeed)),-(float)(0.2*Math.sin(wheelSpeed)));
 
@@ -201,7 +207,7 @@ public class Bike extends GameEntity implements Actor {
 	}
 
 
-
+	//destroys the entire bike
 	public void destroy() {
 		body.destroy();
 		leftWheel.destroy();
@@ -209,14 +215,17 @@ public class Bike extends GameEntity implements Actor {
 	}
 
 
-
+	//updates the contact listener and keyboard events, allowing us to control our bike
 	public void update(float deltaTime) {
+		
 		//ContactListener
-
+		
+		//if the character was hit for a second, makes it so he is always hit
 		if(gotHit) {
 			setWasHit(true);
 		}
 		
+		//Death animation, the delayer lets it happen before destroying the bike after collision
 		if(wasHit) {
 			rightWheel.detach();
 			leftWheel.detach();
@@ -228,8 +237,7 @@ public class Bike extends GameEntity implements Actor {
 			}
 		}
 
-
-
+		//keyboard, changes direction if spacebar is pressed
 		if (getOwner().getKeyboard().get(KeyEvent.VK_SPACE).isPressed ()) {
 			directionR = !directionR;
 		}
@@ -247,17 +255,18 @@ public class Bike extends GameEntity implements Actor {
 
 		// 4. Makes the bike move forward if the upKey is pressed
 		if (getOwner().getKeyboard ().get(KeyEvent.VK_UP).isDown ()) {
-
-			//TODO getSpeed() -> 5.2.3 faire bien mais faut vitesse du velo
+			
+			// if the character is facing right, powers the left wheel
 			if (directionR) {
 				leftWheel.power(-MAX_WHEEL_SPEED);
 			}
-
+			
+			// if the character is facing right, powers the right wheel
 			if (!directionR) {
 				rightWheel.power(MAX_WHEEL_SPEED);
 			}
 
-			//boost for bike
+			//boost for bike when you press "B" key
 			if (getOwner().getKeyboard().get(KeyEvent.VK_B).isDown()) {
 				if (directionR) {
 					leftWheel.power(-35f);
@@ -280,7 +289,8 @@ public class Bike extends GameEntity implements Actor {
 		}
 
 	}
-
+	
+	// if the bike is hit once, sets it as was hit, allows us for better death animations
 	private void setWasHit(boolean gothitonce) {
 		if(gothitonce) {
 			wasHit = true;
