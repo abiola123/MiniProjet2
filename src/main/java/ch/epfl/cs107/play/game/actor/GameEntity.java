@@ -21,6 +21,9 @@ public abstract class GameEntity {
 
 	//creates the basis for a  GameEntity
 	public GameEntity(ActorGame game, boolean fixed , Vector position) {
+		if(game == null) {
+			throw new NullPointerException("Parametre indispensable null");
+		}
 		this.game = game;
 
 		EntityBuilder entityBuilder = game.CreateEntityBuilder();
@@ -32,6 +35,9 @@ public abstract class GameEntity {
 
 
 	public GameEntity(ActorGame game, boolean fixed) {
+		if(game == null) {
+			throw new NullPointerException("Parametre indispensable null");
+		}
 		this.game = game;
 
 		EntityBuilder entityBuilder = game.CreateEntityBuilder();

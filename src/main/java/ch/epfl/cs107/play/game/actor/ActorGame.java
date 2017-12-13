@@ -3,6 +3,7 @@ package ch.epfl.cs107.play.game.actor;
 
 
 import ch.epfl.cs107.play.game.Game;
+import ch.epfl.cs107.play.game.actor.general.Trigger;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.Entity;
 import ch.epfl.cs107.play.math.EntityBuilder;
@@ -86,6 +87,11 @@ public abstract class ActorGame implements Game {
 	public void end() {
 		for(int i = 0; i <operatingActor.size(); i++ ) {
 			operatingActor.get(i).destroy();
+		}
+		for(int i=1; i<operatingActor.size();i++) {
+			if(!(operatingActor.get(i) instanceof Trigger)) {
+				operatingActor.remove(i);
+			}
 		}
 		getOperatingActor().clear();
 	}

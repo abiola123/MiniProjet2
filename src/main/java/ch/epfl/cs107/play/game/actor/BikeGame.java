@@ -18,6 +18,7 @@ import ch.epfl.cs107.play.math.ContactListener;
 import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Window;
+import java.util.ArrayList;
 
 public class BikeGame extends ActorGame{
 	private FileSystem fileSystem;
@@ -54,11 +55,11 @@ public class BikeGame extends ActorGame{
 	private Trigger checkPoint1;
 	private Trigger checkPoint2;
 	private GravityWell gravityWell;
-	private int collectedKeys = 0;
+//	private int collectedKeys = 0;
 	private TextGraphics keysCounter;
 	private float timeSinceStart = 0;
 	private float timeSinceEnd = 0;
-
+	private ArrayList<Integer> collectedKeys = new ArrayList<Integer>();
 
 
 	//vecteur finish line a changer 
@@ -99,7 +100,7 @@ public class BikeGame extends ActorGame{
 		keysCounter = new TextGraphics("",0.05f,Color.YELLOW,Color.GRAY,0.01f,false,false,keysCounterPosition,0.8f,2.0f);
 
 		setBikePosition(startingPosition);
-		terrain = new Terrain(this,true,terrainPosition);
+		terrain = new Terrain(null,true,terrainPosition);
 		key1 = new Trigger(this,true,key1Position,"key.yellow.png", 1, 1);
 		key2 = new Trigger(this,true,key2Position,"key.yellow.png", 1, 1);
 		key3 = new Trigger(this,true,key3Position,"key.yellow.png", 1, 1);
@@ -143,9 +144,6 @@ public class BikeGame extends ActorGame{
 		//for gravity well
 		contactListenerWell = new BasicContactListener();
 		gravityWell.addContactListener(contactListenerWell);
-
-
-
 
 
 		actorListAddActor((Actor)terrain);
@@ -209,8 +207,8 @@ public class BikeGame extends ActorGame{
 				end();
 			}
 		}
-
-		if (hasHit && collectedKeys >= 10) {
+		if (hasHit && collectedKeys.size() >= 10) {
+//		if (hasHit && collectedKeys >= 10) {
 			bike.setHandLocation();
 			finishLine.setFinishGraphics("flag.green.png");
 			endingMessage("YOU WIN", "PRESS R TO TRY AGAIN");
@@ -219,8 +217,8 @@ public class BikeGame extends ActorGame{
 			} else {
 				end();
 			}
-			
-		} else if (hasHit && collectedKeys < 10) {
+		} else if (hasHit && collectedKeys.size() < 10) {
+//		} else if (hasHit && collectedKeys < 10) {
 			endingMessage("OH NO", "You didn't collect all 10 keys");
 			if(timeSinceEnd < 3f) {
 				timeSinceEnd += deltaTime;
@@ -231,8 +229,8 @@ public class BikeGame extends ActorGame{
 		}
 
 
-
-		if(collectedKeys==10) {
+		if(collectedKeys.size()==10) {
+//		if(collectedKeys==10) {
 			finishLine.setFinishGraphics("door.open.png");
 		}
 
@@ -254,7 +252,8 @@ public class BikeGame extends ActorGame{
 		if(key1.gotHit()) {
 			this.getOperatingActor().remove(key1);
 			key1.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key1.setGotHit(false);
 
 		}
@@ -262,7 +261,8 @@ public class BikeGame extends ActorGame{
 		if(key2.gotHit()) {
 			this.getOperatingActor().remove(key2);
 			key2.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key2.setGotHit(false);
 
 		}
@@ -270,7 +270,8 @@ public class BikeGame extends ActorGame{
 		if(key3.gotHit()) {
 			this.getOperatingActor().remove(key3);
 			key3.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key3.setGotHit(false);
 
 		}
@@ -278,7 +279,8 @@ public class BikeGame extends ActorGame{
 		if(key4.gotHit()) {
 			this.getOperatingActor().remove(key4);
 			key4.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key4.setGotHit(false);
 
 		}
@@ -286,21 +288,24 @@ public class BikeGame extends ActorGame{
 		if(key5.gotHit()) {
 			this.getOperatingActor().remove(key5);
 			key5.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key5.setGotHit(false);
 		}
 
 		if(key6.gotHit()) {
 			this.getOperatingActor().remove(key6);
 			key6.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key6.setGotHit(false);
 		}
 
 		if(key7.gotHit()) {
 			this.getOperatingActor().remove(key7);
 			key7.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key7.setGotHit(false);
 
 		}
@@ -308,27 +313,34 @@ public class BikeGame extends ActorGame{
 		if(key8.gotHit()) {
 			this.getOperatingActor().remove(key8);
 			key8.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key8.setGotHit(false);
 		}
 
 		if(key9.gotHit()) {
 			this.getOperatingActor().remove(key9);
 			key9.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key9.setGotHit(false);
 		}
 
 		if(key10.gotHit()) {
 			this.getOperatingActor().remove(key10);
 			key10.destroy();
-			collectedKeys++;
+			addKeyToList();
+//			collectedKeys++;
 			key10.setGotHit(false);
 		}
-		if(collectedKeys >10) {
-			collectedKeys = 10;
+		
+		 while(collectedKeys.size()>10) {
+			collectedKeys.remove(1);
+			
+//		if(collectedKeys >10) {
+//			collectedKeys = 10;
 		}
-		keysCounter.setText(collectedKeys + "/10");
+		keysCounter.setText(collectedKeys.size() + "/10");
 		keysCounter.setParent(getCanvas());
 		keysCounter.draw(getCanvas());
 
@@ -341,6 +353,11 @@ public class BikeGame extends ActorGame{
 			startingPosition = checkPointPosition;
 		}
 
+	}
+	
+	
+	public void addKeyToList() {
+		collectedKeys.add(1);
 	}
 
 
